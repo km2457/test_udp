@@ -554,6 +554,7 @@ class udpclass:
                 data_all = binascii.b2a_hex(data)[16:-2]
                 data_cmdid_array = self.data_pick_select(data_all)
                 print(data_all)
+                print(data_cmdid_array)
                 # exit()
                 '''
                 if '0x1' in data_cmdid_array:
