@@ -394,7 +394,7 @@ class udpclass:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.sendto(data, (ip, port))
 
-
+        '''
         while True:
             # 接收来自客户端的数据,使用recvfrom
             data, addr = s.recvfrom(1024)
@@ -418,7 +418,7 @@ class udpclass:
                 print(u"已收到心跳包回复")
 
             exit()
-
+        '''
         #exit()
 
         return '1'
@@ -549,12 +549,13 @@ class udpclass:
                 # build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data)))
                 # send_msg(build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data))), '127.0.0.1', 5578)
                 # send_msg(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))), '119.23.138.79', 5577)
-                self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header, data)),addr[0], addr[1])
+                #self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header, self.data_pick_select(other_data))),addr[0], addr[1])
                 print(addr[0])
                 print(addr[1])
+                # print(s.getpeername())
+                # print(s.getsockname())
                 # s.sendall(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))))
                 # print(addr[0])
-                print('333')
                 exit()
                 # print(binascii.b2a_hex(data))p
 
@@ -567,11 +568,15 @@ class udpclass:
 
 u = udpclass()
 # listen()
-#u.send_msg(u.build_msg('beat'),'127.0.0.1',5577)
+#u.send_msg(u.build_msg('beat'),'127.0.0.1',5577) #自己
 #u.data_get()
 
 
 
-#u.send_msg(u.build_msg('select'),'118.25.225.194',5577)
+#u.send_msg(u.build_msg('select'),'118.25.225.194',5577) #15日停的服务器
 
-u.send_msg(u.build_msg('beat'), '119.23.138.79', 5577)
+#u.send_msg(u.build_msg('beat'), '119.23.138.79', 5577)  #任务服务器
+
+#u.send_msg(u.build_msg('select'), '144.34.158.18', 5577) # 搬瓦工
+
+#u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
