@@ -616,9 +616,7 @@ u = udpclass()
 
 try:
     thread.start_new_thread(u.data_get())
-    while True:
-        thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '119.23.138.79', 5577))
-        time.sleep(2)
+    #thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '119.23.138.79', 5577))
     #thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '144.34.158.18', 5577))
     #time.sleep(5)
 except:
