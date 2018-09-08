@@ -7,6 +7,8 @@ import random
 import string
 import unicodedata
 import threading
+import thread
+
 
 t = time.time()
 
@@ -353,17 +355,12 @@ class udpclass:
     def build_msg(self, target, answer=1):
         now_data_values = self.get_data_values(target, answer)
         timestamp_mesc = int(round(t) * 1000)
-        print(timestamp_mesc)
         sequence = '0x1'
         header = '0XEF'
         pack_length = self.create_baochang(*now_data_values)
         pack_length_hight = self.get_hight(pack_length)
         pack_length_low = self.get_low(pack_length)
         timestamp_mesc_last4byte = long(hex(timestamp_mesc)[-9:-1], 16)
-
-
-        print(long(hex(timestamp_mesc)[-8:], 16))
-        print(timestamp_mesc_last4byte)
         #print(hex(timestamp_mesc)[-8:])
         #print(hex(timestamp_mesc)[-8:])
         #print(long('20f41c8L',16))
@@ -425,7 +422,7 @@ class udpclass:
 
     def create_answer(self, header, data):
         data = self.data_pick_select(data)
-        print(data)
+
         if '0x11' in data:
             res = ['0x4', header]
         else:
@@ -577,6 +574,23 @@ u = udpclass()
 
 #u.send_msg(u.build_msg('beat'), '119.23.138.79', 5577)  #任务服务器
 
-u.send_msg(u.build_msg('select'), '144.34.158.18', 5577) # 搬瓦工
-u.data_get()
+#u.send_msg(u.build_msg('select'), '144.34.158.18', 5577) # 搬瓦工
+#thread.start_new_thread(u.send_msg,(u.build_msg('select'),'144.34.158.18',5577))
+
+
+try:
+    thread.start_new_thread(u.data_get())
+    #thread.start_new_thread(u.send_msg, (u.build_msg('select'), '144.34.158.18', 5577))
+
+except:
+    print "Error: unable to start thread"
+
+while 1:
+    pass
+
+
+
+
+
+#u.data_get()
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
