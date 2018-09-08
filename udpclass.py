@@ -559,7 +559,7 @@ class udpclass:
                 if '0x1' in data_cmdid_array:
                     if '0x10' in data_cmdid_array:
                         #self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
-                        print(u'没有注册,发送')
+                        print(u'没有注册,需要发送整个数据')
                     else:
                         print(u'完全正确')
                         return "1"
@@ -616,8 +616,8 @@ u = udpclass()
 #thread.start_new_thread(u.send_msg,(u.build_msg('select'),'144.34.158.18',5577))
 
 
-#t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('select'),'144.34.158.18',5577))
-#t1.start()
+t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('beat'),'119.23.138.79',5577))
+t1.start()
 
 t2 = threading.Thread(target=u.data_get(),args=())
 t2.start()      # 并发
