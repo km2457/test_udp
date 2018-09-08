@@ -571,7 +571,7 @@ u = udpclass()
 #u.send_msg(u.build_msg('beat'),'127.0.0.1',5577) #自己
 #u.data_get()
 
-
+u.data_get()
 
 #u.send_msg(u.build_msg('select'),'118.25.225.194',5577) #15日停的服务器
 
