@@ -555,7 +555,7 @@ class udpclass:
 
                 data_all = binascii.b2a_hex(data)[16:-2]
                 data_cmdid_array = self.data_pick_select(data_all)
-                print(data_cmdid_array)
+                print(repr(data_cmdid_array))
                 if '0x1' in data_cmdid_array:
                     if '0x10' in data_cmdid_array:
                         #self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
