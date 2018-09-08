@@ -615,7 +615,7 @@ u = udpclass()
 try:
     thread.start_new_thread(u.data_get())
     thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '119.23.138.79', 5577))
-
+    time.sleep(5)
 except:
     print "Error: unable to start thread"
 
