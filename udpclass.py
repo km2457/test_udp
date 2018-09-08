@@ -571,12 +571,12 @@ u = udpclass()
 #u.send_msg(u.build_msg('beat'),'127.0.0.1',5577) #自己
 #u.data_get()
 
-u.data_get()
+#u.data_get()
 
 #u.send_msg(u.build_msg('select'),'118.25.225.194',5577) #15日停的服务器
 
 #u.send_msg(u.build_msg('beat'), '119.23.138.79', 5577)  #任务服务器
 
-#u.send_msg(u.build_msg('select'), '144.34.158.18', 5577) # 搬瓦工
-
+u.send_msg(u.build_msg('select'), '144.34.158.18', 5577) # 搬瓦工
+u.data_get()
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
