@@ -617,10 +617,11 @@ u = udpclass()
 
 
 t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('beat'),'119.23.138.79',5577))
-t1.start()
+
 
 t2 = threading.Thread(target=u.data_get(),args=())
-t2.start()      # 并发
+t2.start()
+t1.start()      # 并发
 
 #u.data_get()
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
