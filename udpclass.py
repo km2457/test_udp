@@ -7,7 +7,7 @@ import random
 import string
 import unicodedata
 import threading
-import thread
+
 
 
 t = time.time()
@@ -417,6 +417,7 @@ class udpclass:
 
             exit()
         '''
+
         #exit()
 
         return '1'
@@ -604,7 +605,7 @@ u = udpclass()
 #u.send_msg(u.build_msg('beat'),'127.0.0.1',5577) #自己
 #u.data_get()
 
-#u.data_get()
+u.data_get()
 
 #u.send_msg(u.build_msg('select'),'118.25.225.194',5577) #15日停的服务器
 
@@ -614,19 +615,13 @@ u = udpclass()
 #thread.start_new_thread(u.send_msg,(u.build_msg('select'),'144.34.158.18',5577))
 
 
-try:
-    thread.start_new_thread(u.data_get())
-    #thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '119.23.138.79', 5577))
-    #thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '144.34.158.18', 5577))
-    #time.sleep(5)
-except:
-    print "Error: unable to start thread"
+t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('select'),'144.34.158.18',5577))
 
-while 1:
-    pass
+t2 = threading.Thread(target=u.data_get(),args=())
 
+t1.start()      # 并发
 
-
+t2.start()      # 并发
 
 #u.data_get()
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
