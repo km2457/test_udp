@@ -390,6 +390,7 @@ class udpclass:
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.sendto(data, (ip, port))
+        print('fasongchenggong')
 
         '''
         while True:
@@ -534,12 +535,12 @@ class udpclass:
             while True:
                 # print("11")
                 data, addr = s.recvfrom(4096)
-                data_side = binascii.b2a_hex(data)[16:-2]
-                select_msg_id = int(data_side[0:4], 16)
-                select_msg_pack_legth = int(data_side[4:8], 16)
-                select_msg_pack_legth = int(data_side[4:8], 16)
-                other_data = data_side[8 + select_msg_pack_legth * 2:]
-                select_header = data_side[8:select_msg_pack_legth * 2]
+                #data_side = binascii.b2a_hex(data)[16:-2]
+                #select_msg_id = int(data_side[0:4], 16)
+                #select_msg_pack_legth = int(data_side[4:8], 16)
+                #select_msg_pack_legth = int(data_side[4:8], 16)
+                #other_data = data_side[8 + select_msg_pack_legth * 2:]
+                #select_header = data_side[8:select_msg_pack_legth * 2]
 
                 # print('0x11' in data_pick_select(other_data))
                 # print(create_answer(select_header,data_pick_select(other_data)))
@@ -549,11 +550,32 @@ class udpclass:
                 #self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header, self.data_pick_select(other_data))),addr[0], addr[1])
                 print(addr[0])
                 print(addr[1])
+
+                data_all = binascii.b2a_hex(data)[16:-2]
+                data_cmdid_array = self.data_pick_select(data_all)
+                print(data_all)
+                # exit()
+                '''
+                if '0x1' in data_cmdid_array:
+                    if '0x10' in data_cmdid_array:
+                        self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
+                        print(u'没有注册,发送')
+                    else:
+                        print(u'完全正确')
+                        return "1"
+                elif '0x2' in data_cmdid_array:
+                    print(u"已收到心跳包回复")
+                '''
+
+
+
+
+
                 # print(s.getpeername())
                 # print(s.getsockname())
                 # s.sendall(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))))
                 # print(addr[0])
-                exit()
+                #exit()
                 # print(binascii.b2a_hex(data))p
 
 
@@ -587,7 +609,6 @@ except:
 
 while 1:
     pass
-
 
 
 
