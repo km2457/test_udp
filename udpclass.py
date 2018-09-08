@@ -564,6 +564,8 @@ class udpclass:
                 elif '0x2' in data_cmdid_array:
                     print(u"已收到心跳包回复")
 
+                time.sleep(2)
+
 
 
                 # exit()
@@ -614,8 +616,11 @@ u = udpclass()
 
 try:
     thread.start_new_thread(u.data_get())
-    thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '119.23.138.79', 5577))
-    time.sleep(5)
+    while True:
+        thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '119.23.138.79', 5577))
+        time.sleep(2)
+    #thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '144.34.158.18', 5577))
+    #time.sleep(5)
 except:
     print "Error: unable to start thread"
 
