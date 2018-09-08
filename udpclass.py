@@ -553,8 +553,19 @@ class udpclass:
 
                 data_all = binascii.b2a_hex(data)[16:-2]
                 data_cmdid_array = self.data_pick_select(data_all)
-                print(data_all)
-                print(data_cmdid_array)
+
+                if '0x1' in data_cmdid_array:
+                    if '0x10' in data_cmdid_array:
+                        self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
+                        print(u'没有注册,发送')
+                    else:
+                        print(u'完全正确')
+                        return "1"
+                elif '0x2' in data_cmdid_array:
+                    print(u"已收到心跳包回复")
+
+
+
                 # exit()
                 '''
                 if '0x1' in data_cmdid_array:
@@ -603,7 +614,7 @@ u = udpclass()
 
 try:
     thread.start_new_thread(u.data_get())
-    #thread.start_new_thread(u.send_msg, (u.build_msg('select'), '144.34.158.18', 5577))
+    thread.start_new_thread(u.send_msg, (u.build_msg('beat'), '119.23.138.79', 5577))
 
 except:
     print "Error: unable to start thread"
