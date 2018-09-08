@@ -549,6 +549,7 @@ class udpclass:
                 # send_msg(build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data))), '127.0.0.1', 5578)
                 # send_msg(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))), '119.23.138.79', 5577)
                 #self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header, self.data_pick_select(other_data))),addr[0], addr[1])
+                print(data)
                 print(addr[0])
                 print(addr[1])
 
