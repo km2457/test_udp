@@ -554,10 +554,10 @@ class udpclass:
 
                 data_all = binascii.b2a_hex(data)[16:-2]
                 data_cmdid_array = self.data_pick_select(data_all)
-
+                print(data_cmdid_array)
                 if '0x1' in data_cmdid_array:
                     if '0x10' in data_cmdid_array:
-                        self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
+                        #self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
                         print(u'没有注册,发送')
                     else:
                         print(u'完全正确')
@@ -615,12 +615,10 @@ u = udpclass()
 #thread.start_new_thread(u.send_msg,(u.build_msg('select'),'144.34.158.18',5577))
 
 
-t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('select'),'144.34.158.18',5577))
+#t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('select'),'144.34.158.18',5577))
+#t1.start()
 
 t2 = threading.Thread(target=u.data_get(),args=())
-
-t1.start()      # 并发
-
 t2.start()      # 并发
 
 #u.data_get()
