@@ -389,10 +389,11 @@ class udpclass:
         import socket
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.sendto(data, (ip, port))
+        print('sentojieguo')
+        print(s.sendto(data, (ip, port)))
         print('fasongchenggong')
 
-        '''
+
         while True:
             # 接收来自客户端的数据,使用recvfrom
             data, addr = s.recvfrom(1024)
@@ -405,18 +406,24 @@ class udpclass:
             print(data_all)
             #exit()
 
+            '''
             if '0x1' in data_cmdid_array:
                 if '0x10' in data_cmdid_array:
-                    self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
+                    #self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
                     print(u'没有注册,发送')
                 else:
                     print(u'完全正确')
                     return "1"
             elif '0x2' in data_cmdid_array:
                 print(u"已收到心跳包回复")
+            elif '0x4' in data_cmdid_array:
+                print(u"查询信息")
+                self.send_msg(self.build_msg('return_select', answer=self.create_answer(self.select_header, self.data_pick_select(other_data))),
+                         addr[0], addr[1])
+            '''
 
             exit()
-        '''
+
 
         #exit()
 
@@ -478,7 +485,7 @@ class udpclass:
         return res
 
     def create_answer(header, data):
-        print(data)
+        #print(data)
 
         if '0x11' in data_pick_select(other_data):
             res = ['0x4', header]
@@ -536,25 +543,31 @@ class udpclass:
             while True:
                 # print("11")
                 data, addr = s.recvfrom(4096)
-                #data_side = binascii.b2a_hex(data)[16:-2]
+                data_side = binascii.b2a_hex(data)[16:-2]
                 #select_msg_id = int(data_side[0:4], 16)
                 #select_msg_pack_legth = int(data_side[4:8], 16)
-                #select_msg_pack_legth = int(data_side[4:8], 16)
-                #other_data = data_side[8 + select_msg_pack_legth * 2:]
-                #select_header = data_side[8:select_msg_pack_legth * 2]
+                select_msg_pack_legth = int(data_side[4:8], 16)
+                other_data = data_side[8 + select_msg_pack_legth * 2:]
+                select_header = data_side[8:select_msg_pack_legth * 2]
 
                 # print('0x11' in data_pick_select(other_data))
                 # print(create_answer(select_header,data_pick_select(other_data)))
                 # build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data)))
                 # send_msg(build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data))), '127.0.0.1', 5578)
                 # send_msg(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))), '119.23.138.79', 5577)
+
                 #self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header, self.data_pick_select(other_data))),addr[0], addr[1])
+
+
+
+                data_all = binascii.b2a_hex(data)[16:-2]
+                data_cmdid_array = self.data_pick_select(data_all)
+                
                 print(repr(data))
                 print(addr[0])
                 print(addr[1])
 
-                data_all = binascii.b2a_hex(data)[16:-2]
-                data_cmdid_array = self.data_pick_select(data_all)
+
                 '''
                 print(repr(data_cmdid_array))
                 if '0x1' in data_cmdid_array:
@@ -583,11 +596,6 @@ class udpclass:
                 elif '0x2' in data_cmdid_array:
                     print(u"已收到心跳包回复")
                 '''
-
-
-
-
-
                 # print(s.getpeername())
                 # print(s.getsockname())
                 # s.sendall(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))))
@@ -617,27 +625,27 @@ u = udpclass()
 #thread.start_new_thread(u.send_msg,(u.build_msg('select'),'144.34.158.18',5577))
 
 
-#t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('beat'),'144.34.158.18',5577))
+#t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('select'),'119.23.138.79',5577))
 
 
 t2 = threading.Thread(target=u.data_get(),args=())
 #t2.start()
 #while True:
 #t1.start()      # 并发
+t2.start()      # 并发
 #time.sleep(1)
 #u.data_get()
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
 
 
-
-
+'''
 while True:
     #print(t2.isAlive())
-    if t2.isAlive() is False:
-        #t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('beat'),'144.34.158.18',5577))
-        t2.start()
-        print(t2.isAlive())
+    if t1.isAlive() is False:
+        t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('first_reg'),'144.34.158.18',5577))
+        t1.start()
+        #print(t1.isAlive())
         # t1.join(''
-
+'''
 
 
