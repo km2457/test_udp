@@ -628,13 +628,15 @@ t2 = threading.Thread(target=u.data_get(),args=())
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
 
 
+
+
 while True:
-    print(t2.isAlive())
+    #print(t2.isAlive())
     if t2.isAlive() is False:
         #t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('beat'),'144.34.158.18',5577))
         t2.start()
         print(t2.isAlive())
-        # t1.join()
+        # t1.join(''
 
 
 
