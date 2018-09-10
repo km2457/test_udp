@@ -555,6 +555,7 @@ class udpclass:
 
                 data_all = binascii.b2a_hex(data)[16:-2]
                 data_cmdid_array = self.data_pick_select(data_all)
+                '''
                 print(repr(data_cmdid_array))
                 if '0x1' in data_cmdid_array:
                     if '0x10' in data_cmdid_array:
@@ -565,7 +566,7 @@ class udpclass:
                         return "1"
                 elif '0x2' in data_cmdid_array:
                     print(u"已收到心跳包回复")
-
+                '''
                 time.sleep(2)
 
 
