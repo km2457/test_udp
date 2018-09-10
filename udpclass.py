@@ -487,6 +487,8 @@ class udpclass:
             pack = data[8:8+int(pack_length,16)]
             res.append(id)
             data = data[8+int(pack_length,16):]
+
+
         '''
         res = []
         r = len(data) / 8
@@ -575,7 +577,11 @@ class udpclass:
 
 
                 data_all = binascii.b2a_hex(data)[16:-2]
+                print(data_all)
+                
                 data_cmdid_array = self.data_pick_select(data_all)
+
+
 
                 print(repr(data))
                 print(addr[0])
@@ -643,10 +649,13 @@ u = udpclass()
 #t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('select'),'144.34.158.18',5577))
 
 t2 = threading.Thread(target=u.data_get(),args=())
-#t2.start()
+t2.start()
+
+
+
 #while True:
 #t1.start()      # 并发
-t2.start()      # 并发
+#t2.start()      # 并发
 #time.sleep(1)
 #u.data_get()
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
