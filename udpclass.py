@@ -393,7 +393,7 @@ class udpclass:
         print(s.sendto(data, (ip, port)))
         print('fasongchenggong')
 
-
+        '''
         while True:
             # 接收来自客户端的数据,使用recvfrom
             data, addr = s.recvfrom(1024)
@@ -405,8 +405,10 @@ class udpclass:
             data_cmdid_array = self.data_pick_select(data_all)
             print(data_all)
             #exit()
+    
+        '''
 
-            '''
+        '''
             if '0x1' in data_cmdid_array:
                 if '0x10' in data_cmdid_array:
                     #self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
@@ -420,9 +422,9 @@ class udpclass:
                 print(u"查询信息")
                 self.send_msg(self.build_msg('return_select', answer=self.create_answer(self.select_header, self.data_pick_select(other_data))),
                          addr[0], addr[1])
-            '''
+        '''
 
-            exit()
+        exit()
 
 
         #exit()
@@ -477,10 +479,23 @@ class udpclass:
 
     def data_pick_select(self, data):
         res = []
+
+        while data:
+            id = data[0:4]
+            pack_length = data[4:8]
+            pack = data[8:8+int(pack_length,16)]
+            res.append(id)
+            data = data[8+int(pack_length,16):]
+
+
+        '''
+        res = []
         r = len(data) / 8
         for i in range(0, r):
             res.append(hex(int(data[0:4], 16)))
             data = data[8:]
+
+        '''
 
         return res
 
@@ -566,6 +581,7 @@ class udpclass:
                 print(repr(data))
                 print(addr[0])
                 print(addr[1])
+                print(data_cmdid_array)
 
 
                 '''
@@ -628,10 +644,10 @@ u = udpclass()
 #t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('select'),'144.34.158.18',5577))
 
 t2 = threading.Thread(target=u.data_get(),args=())
-t2.start()
+#t2.start()
 #while True:
 #t1.start()      # 并发
-#t2.start()      # 并发
+t2.start()      # 并发
 #time.sleep(1)
 #u.data_get()
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
