@@ -616,12 +616,25 @@ u = udpclass()
 #thread.start_new_thread(u.send_msg,(u.build_msg('select'),'144.34.158.18',5577))
 
 
-t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('beat'),'119.23.138.79',5577))
+#t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('beat'),'144.34.158.18',5577))
 
 
 t2 = threading.Thread(target=u.data_get(),args=())
-t2.start()
-t1.start()      # 并发
-
+#t2.start()
+#while True:
+#t1.start()      # 并发
+#time.sleep(1)
 #u.data_get()
 #u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
+
+
+while True:
+    print(t2.isAlive())
+    if t2.isAlive() is False:
+        #t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('beat'),'144.34.158.18',5577))
+        t2.start()
+        print(t2.isAlive())
+        # t1.join()
+
+
+
