@@ -479,15 +479,14 @@ class udpclass:
 
     def data_pick_select(self, data):
         res = []
-
+        print(data)
         while data:
+            print(data)
             id = data[0:4]
             pack_length = data[4:8]
             pack = data[8:8+int(pack_length,16)]
             res.append(id)
             data = data[8+int(pack_length,16):]
-
-
         '''
         res = []
         r = len(data) / 8
