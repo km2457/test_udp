@@ -478,12 +478,12 @@ class udpclass:
         while data:
             #print(data)
             id = data[0:4]
-            print(id)
+            #print(id)
             pack_length = data[4:8]
             pack = data[8:8 + int(pack_length, 16)]
             res.append(id)
             data = data[8 + int(pack_length, 16):]
-
+            print(data)
         '''
         res = []
         r = len(data) / 8
