@@ -474,10 +474,11 @@ class udpclass:
 
     def data_pick_select(self, data):
         res = []
-        print(data)
+        #print(data)
         while data:
-            print(data)
+            #print(data)
             id = data[0:4]
+            print(id)
             pack_length = data[4:8]
             pack = data[8:8 + int(pack_length, 16)]
             res.append(id)
@@ -576,6 +577,7 @@ class udpclass:
                 #print(repr(data))
                 print(addr[0])
                 print(addr[1])
+
                 print(data_cmdid_array)
 
                 '''
