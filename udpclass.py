@@ -482,7 +482,7 @@ class udpclass:
             pack_length = data[4:8]
             pack = data[8:8 + int(pack_length, 16)]
             res.append(id)
-            data = data[8 + int(pack_length, 16):]
+            data = data[8 + int(pack_length, 16)*2:]
             print(data)
         '''
         res = []
