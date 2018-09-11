@@ -643,7 +643,7 @@ class udpclass:
                 # send_msg(build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data))), '127.0.0.1', 5578)
                 # send_msg(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))), '119.23.138.79', 5577)
 
-                #self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header, self.data_pick_select(other_data))),addr[0], addr[1])
+
 
 
 
@@ -652,6 +652,11 @@ class udpclass:
 
                 data_cmdid_array = self.data_pick_select(data_all)
 
+                if '0x4' in data_cmdid_array:
+                    self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header,
+                                                                                            self.data_pick_select(
+                                                                                                other_data))), addr[0],
+                                  addr[1])
 
 
                 print(repr(data))
@@ -718,8 +723,8 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-#t1 = threading.Thread(target=u.send_msg,args=("act_report",'119.23.138.79',5577))
-
+#t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5578))
+#t1.start()
 t2 = threading.Thread(target=u.data_get(),args=())
 #print('11')
 t2.start()
