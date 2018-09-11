@@ -610,7 +610,7 @@ class udpclass:
                 data_cmdid_array = self.data_pick_select(data_all)
 
                 if '0x4' in data_cmdid_array:
-                    self.send_msg('return_select',addr[0],addr[1],answer=self.create_answer(select_header,self.data_pick_select(other_data)))
+                    self.send_msg('return_select','119.23.138.79',5577,answer=self.create_answer(select_header,self.data_pick_select(other_data)))
 
 
                 print(repr(data))
@@ -677,7 +677,7 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-print()
+
 #t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5577))
 #t1.start()
 t2 = threading.Thread(target=u.data_get(),args=())
