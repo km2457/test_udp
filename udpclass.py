@@ -101,6 +101,10 @@ class udpclass:
                         r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
                         r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
                         r.append(self.charToUnic2(args[1]).encode('utf-8'))  # string-escape .encode('ASCII')
+                    elif args[0] == '0x54':
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
+                        r.append(args[1].encode('unicode_escape'))
                     else:
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
@@ -139,6 +143,26 @@ class udpclass:
                         r.append(self.get_hight(4))
                         r.append(self.get_low(4))
                         r.append(args[1])
+                    elif args[0] == '0x50':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
+                    elif args[0] == '0x51':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
+                    elif args[0] == '0x52':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
+                    elif args[0] == '0x53':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
+                    elif args[0] == '0x56':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
                     else:
                         r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
                         r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
@@ -167,6 +191,8 @@ class udpclass:
                         r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
                     elif args[0] == '0x13':
                         r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
+                    elif args[0] == '0x54':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     else:
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                 elif self.is_number(args[1]) == True:
@@ -184,6 +210,16 @@ class udpclass:
                     elif args[0] == '0x30':
                         r += '4BL'
                     elif args[0] == '0x31':
+                        r += '4BL'
+                    elif args[0] == '0x50':
+                        r += '4BL'
+                    elif args[0] == '0x51':
+                        r += '4BL'
+                    elif args[0] == '0x52':
+                        r += '4BL'
+                    elif args[0] == '0x53':
+                        r += '4BL'
+                    elif args[0] == '0x56':
                         r += '4BL'
                     else:
                         r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
@@ -214,6 +250,8 @@ class udpclass:
                         r += len(self.charToUnic2(args[1]).encode('utf-8'))
                     elif args[0] == '0x13':
                         r += len(self.charToUnic2(args[1]).encode('utf-8'))
+                    if args[0] == '0x54':
+                        r += len(args[1].encode('unicode_escape'))
                     else:
                         r += len(args[1].encode('unicode_escape'))
                 elif self.is_number(args[1]) == True:
@@ -231,6 +269,16 @@ class udpclass:
                     elif args[0] == '0x30':
                         r += 4
                     elif args[0] == '0x31':
+                        r += 4
+                    elif args[0] == '0x50':
+                        r += 4
+                    elif args[0] == '0x51':
+                        r += 4
+                    elif args[0] == '0x52':
+                        r += 4
+                    elif args[0] == '0x53':
+                        r += 4
+                    elif args[0] == '0x56':
                         r += 4
                     else:
                         r += len(self.charToUnic2(args[1]).encode('utf-8'))
@@ -311,17 +359,17 @@ class udpclass:
             )
         elif data == 'config':
             result_value = (
-                # '0x5', '0',  # 设置消息
-                # '0x41', '123456',  # APN名称
-                # '0x42', '123',  # APN用户名
-                # '0x43', '123456',  # APN密码
-                # '0x50', '10',  # 周期性信息上报周期 整数
-                # '0x51', '10',  # 心跳上报周期 整数
-                # '0x52', '10',  # 消息合并周期 整数
-                # '0x53', '123456',  # 重启设备 正整数 1就是要重启
-                # '0x54', '0',  # 远程升级 字符串形式
-                # '0x55', '10',  # 网管服务IP IP地址 4byte
-                # '0x56, '10',  # 正整数，如5577
+                 '0x5', '',  # 设置消息
+                 '0x41', '123456',  # APN名称 unicode
+                 '0x42', '123',  # APN用户名 unicode
+                 '0x43', '123456',  # APN密码 unicode
+                 '0x50', 10,  # 周期性信息上报周期 整数
+                 '0x51', 10,  # 心跳上报周期 整数
+                 '0x52', 10,  # 消息合并周期 整数
+                 '0x53', 1,  # 重启设备 正整数 1就是要重启
+                 '0x54', 'http://site.baidu.com/',  # 远程升级 字符串形式
+                 '0x55', '10',  # 网管服务IP IP地址 4byte
+                 '0x56',10, #网管服务端口 正整数
 
             )
         elif data == 'report':
@@ -611,6 +659,9 @@ class udpclass:
 
                 if '0x4' in data_cmdid_array:
                     self.send_msg('return_select','119.23.138.79',5577,answer=self.create_answer(select_header,self.data_pick_select(other_data)))
+                elif '0x5' in data_cmdid_array:
+                    print('config')
+                    print(data_side)
 
 
                 print(repr(data))
@@ -678,7 +729,7 @@ u = udpclass()
 timeout = 3 * 1  #
 
 
-#t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("config",'144.34.158.18',5577))
 #t1.start()
 t2 = threading.Thread(target=u.data_get(),args=())
 #print('11')
