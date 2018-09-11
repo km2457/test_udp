@@ -492,7 +492,8 @@ class udpclass:
         return '1'
 
     def create_answer(self, header, data):
-        data = self.data_pick_select(data)
+        #data = self.data_pick_select(data)
+        #data = self.data_pick_select(data)
 
         if '0x11' in data:
             res = ['0x4', header]
@@ -601,7 +602,7 @@ class udpclass:
                     print('other_data')
                     print(other_data)
                     print('other_data')
-                    print(self.data_pick_select(other_data))
+                    print(self.create_answer(select_header,self.data_pick_select(other_data)))
                     print('ff')
                 #print(repr(data))
                 print(addr[0])
