@@ -545,7 +545,7 @@ class udpclass:
             id = data[0:4]
             # print(id)
             pack_length = data[4:8]
-            print(pack_length)
+            print(type(pack_length))
             pack = data[8:8 + int(pack_length, 16)]
             res.append(hex(int(id, 16)))
             data = data[8 + int(pack_length, 16) * 2:]
@@ -596,6 +596,7 @@ class udpclass:
                 data_cmdid_array = self.data_pick_select(data_all)
 
                 if '0x4' in data_cmdid_array:
+                    print('shoudao0X4')
                     self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header,
                                                                                             self.data_pick_select(
                                                                                                 other_data))), addr[0],
