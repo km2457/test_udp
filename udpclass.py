@@ -675,11 +675,11 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5577))
-t1.start()
-#t2 = threading.Thread(target=u.data_get(),args=())
+#t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5577))
+#t1.start()
+t2 = threading.Thread(target=u.data_get(),args=())
 #print('11')
-#t2.start()
+t2.start()
 
 
 
