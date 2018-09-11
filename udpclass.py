@@ -255,6 +255,7 @@ class udpclass:
     ip_byte = socket.inet_aton(ip)
 
     def get_data_values(self, data, answer=1):
+        result_value = 0
         if data == 'first_reg':
             result_value = ('0x1', '',  # 注册 必须在第一个子包 为必要发
                       '0x10', '98200940720187',  # 终端厂商编号 字符串
