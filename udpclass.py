@@ -596,7 +596,9 @@ class udpclass:
 
                 if '0x4' in data_cmdid_array:
                     #self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header,self.data_pick_select( other_data))), addr[0],addr[1])
+                    print('anser')
                     print(self.create_answer(select_header,self.data_pick_select(other_data)))
+                    print('anser')
 
                 print(repr(data))
                 print(addr[0])
