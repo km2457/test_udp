@@ -638,7 +638,9 @@ class udpclass:
                 # send_msg(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))), '119.23.138.79', 5577)
 
                 data_all = binascii.b2a_hex(data)[16:-2]
-                print(data_all)
+                print('nizhuan')
+                print(binascii.unhexlify(data_side))
+                #print(data_all)
 
                 data_cmdid_array = self.data_pick_cmdid(data_all)
 
@@ -648,10 +650,10 @@ class udpclass:
                 elif '0x5' in data_cmdid_array:
                     print('config')
                     print(binascii.hexlify(data))
-                    print()
-                    print(other_data)
-                    print()
-                    print(data_side)
+
+                    #print(other_data)
+
+                    #print(data_side)
                     print(self.create_answer(select_header, self.data_pick_cmdid(data_side)))
 
                 print(repr(data))
