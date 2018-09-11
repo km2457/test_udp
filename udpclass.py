@@ -7,6 +7,8 @@ import random
 import string
 import unicodedata
 import threading
+import select
+
 
 t = time.time()
 
@@ -15,6 +17,8 @@ class udpclass:
     def charToUnic(self, ch):
         tmp_ch = hex(ord(ch))[2:]
         return "0" * (4 - len(tmp_ch)) + tmp_ch
+
+
 
     def charToUnic2(self, ch):
         r = ''
@@ -298,10 +302,10 @@ class udpclass:
             )
         elif data == 'act_report':
             result = (
-                '0x3', '0',  # 周期性上报数据id
-                '0x11', '123456',  # 终端序列号(SN) 字符串
-                '0x20', '0',  # 无线网络信息;当终端为多通道时,包含多个本CMD
-                '0x6', '01H',  # 告警信息(如果有)
+                 '0x3', '0',  # 周期性上报数据id
+                 '0x11', '123456',  # 终端序列号(SN) 字符串
+                 '0x20', '0',  # 无线网络信息;当终端为多通道时,包含多个本CMD
+                 '0x6', '01H',  # 告警信息(如果有)
 
             )
         elif data == 'config':
@@ -357,10 +361,10 @@ class udpclass:
         pack_length_hight = self.get_hight(pack_length)
         pack_length_low = self.get_low(pack_length)
         timestamp_mesc_last4byte = long(hex(timestamp_mesc)[-9:-1], 16)
-        # print(hex(timestamp_mesc)[-8:])
-        # print(hex(timestamp_mesc)[-8:])
-        # print(long('20f41c8L',16))
-        # print(timestamp_mesc_last4byte)
+        #print(hex(timestamp_mesc)[-8:])
+        #print(hex(timestamp_mesc)[-8:])
+        #print(long('20f41c8L',16))
+        #print(timestamp_mesc_last4byte)
         new_values = [int(header, 16), 1, timestamp_mesc_last4byte, pack_length_hight,
                       pack_length_low] + self.create_values(
             *now_data_values)
@@ -368,6 +372,11 @@ class udpclass:
         a = struct.Struct('>BBLBB' + self.create_index(*now_data_values))
         result_nochecksum = a.pack(*new_values)
         checksum = self.ichecksum3(self.ichecksum_change((binascii.hexlify(result_nochecksum[6:]))))
+        #print('555')
+        #print(binascii.hexlify(result_nochecksum[6:]))
+        #print('555')
+        #checksum = self.ichecksum3(self.ichecksum_change((binascii.hexlify(result_nochecksum[6:]))))
+
         new_values.append(checksum)
         b = struct.Struct('>BBLBB' + self.create_index(*now_data_values) + 'B')
         result = b.pack(*new_values)
@@ -381,30 +390,93 @@ class udpclass:
 
         return result
 
+
+    def send_msg_manage(self,data):
+        data_all = data[16:-2]
+        data_cmdid_array = self.data_pick_select(data_all)
+        print(data_cmdid_array)
+        print(u'获得服务器回应')
+        if '0x1' in data_cmdid_array:
+            print(u'注册信息')
+            if '0x2' in data_cmdid_array:
+                print(u'需要重新提交资料')
+            else:
+                print(u'全资料注册成功')
+            #print(data_cmdid_array)
+        elif '0x2' in data_cmdid_array:
+            print(u'心跳信息')
+        elif '0x3' in data_cmdid_array:
+            print(u'主动上报信息')
+
+
+
+        return 1
+
+
     def send_msg(self, data, ip, port):
+        send_data = u.build_msg(data)
         import socket
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        print('sentojieguo')
-        print(s.sendto(data, (ip, port)))
-        print('fasongchenggong')
+        #print('sentojieguo')
+        s.sendto(send_data, (ip, port))
+        #print('fasongchenggong')
+        s.setblocking(0)
+        ready = select.select([s], [], [], timeout)
+        if ready[0]:
+            # 接收结果
+            #data = s.recv(1024).strip('\x00')
+            res = s.recv(1024)
+            #print(binascii.b2a_hex(res))
+            self.send_msg_manage(binascii.b2a_hex(res))
+            print(binascii.b2a_hex(res))
+
+        else:
+            print("time out")
+            relink = 3
+            c = 1
+            while c <= relink:
+                s.sendto(send_data, (ip, port))
+                s.setblocking(0)
+                ready = select.select([s], [], [], timeout)
+                if ready[0]:
+                    # 接收结果
+                    # data = s.recv(1024).strip('\x00')
+                    res = s.recv(1024)
+                    #print(binascii.b2a_hex(res))
+                    self.send_msg_manage(binascii.b2a_hex(res))
+                    break
+                else:
+                    print("time out")
+                    print("relink:"+str(c))
+                c += 1
+            #print(1)
 
         '''
         while True:
             # 接收来自客户端的数据,使用recvfrom
+
+            print(end)
+            if int(end-start)==3:
+                print('Warning: Timeout!!'*5)
+                break
+
+
+            time.sleep(2)
             data, addr = s.recvfrom(1024)
+
+
             print('Received from %s:%s.' % addr)
             print('res')
             print(binascii.b2a_hex(data))
-
+        '''
+        '''
             data_all = binascii.b2a_hex(data)[16:-2]
             data_cmdid_array = self.data_pick_select(data_all)
-            print(data_all)
+            #print(data_all)
             #exit()
+    
 
-        '''
-
-        '''
             if '0x1' in data_cmdid_array:
                 if '0x10' in data_cmdid_array:
                     #self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
@@ -420,9 +492,10 @@ class udpclass:
                          addr[0], addr[1])
         '''
 
-        exit()
+        #exit()
 
-        # exit()
+
+        #exit()
 
         return '1'
 
@@ -444,7 +517,7 @@ class udpclass:
             elif i == '0x12':  # 终端版本号O
                 res.append("111")
             elif i == '0x13':  # 终端制式(LTE/2G等)O
-                res.append("01H")
+                res.append("01")
             elif i == '0x14':  # 终端IMEI号O
                 res.append("111111")
             elif i == '0x16':  # 终端能力级别
@@ -481,9 +554,10 @@ class udpclass:
             #print(id)
             pack_length = data[4:8]
             pack = data[8:8 + int(pack_length, 16)]
-            res.append(id)
+            res.append(hex(int(id,16)))
             data = data[8 + int(pack_length, 16)*2:]
-            print(data)
+
+
         '''
         res = []
         r = len(data) / 8
@@ -496,7 +570,7 @@ class udpclass:
         return res
 
     def create_answer(header, data):
-        # print(data)
+        #print(data)
 
         if '0x11' in data_pick_select(other_data):
             res = ['0x4', header]
@@ -545,18 +619,20 @@ class udpclass:
         import socket, binascii
 
         HOST = ''  # use '' to expose to all networks
-        port = 5577
+        port = 5578
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((HOST, port))
 
         try:
+
             while True:
                 # print("11")
                 data, addr = s.recvfrom(4096)
+                if not data: break
                 data_side = binascii.b2a_hex(data)[16:-2]
-                # select_msg_id = int(data_side[0:4], 16)
-                # select_msg_pack_legth = int(data_side[4:8], 16)
+                #select_msg_id = int(data_side[0:4], 16)
+                #select_msg_pack_legth = int(data_side[4:8], 16)
                 select_msg_pack_legth = int(data_side[4:8], 16)
                 other_data = data_side[8 + select_msg_pack_legth * 2:]
                 select_header = data_side[8:select_msg_pack_legth * 2]
@@ -567,18 +643,22 @@ class udpclass:
                 # send_msg(build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data))), '127.0.0.1', 5578)
                 # send_msg(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))), '119.23.138.79', 5577)
 
-                # self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header, self.data_pick_select(other_data))),addr[0], addr[1])
+                #self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header, self.data_pick_select(other_data))),addr[0], addr[1])
+
+
 
                 data_all = binascii.b2a_hex(data)[16:-2]
                 print(data_all)
 
                 data_cmdid_array = self.data_pick_select(data_all)
 
-                #print(repr(data))
+
+
+                print(repr(data))
                 print(addr[0])
                 print(addr[1])
-
                 print(data_cmdid_array)
+
 
                 '''
                 print(repr(data_cmdid_array))
@@ -592,9 +672,11 @@ class udpclass:
                 elif '0x2' in data_cmdid_array:
                     print(u"已收到心跳包回复")
                 '''
-                # time.sleep(2)
+                #time.sleep(2)
 
-                # exit()
+
+
+                exit()
                 '''
                 if '0x1' in data_cmdid_array:
                     if '0x10' in data_cmdid_array:
@@ -610,7 +692,7 @@ class udpclass:
                 # print(s.getsockname())
                 # s.sendall(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))))
                 # print(addr[0])
-                # exit()
+                #exit()
                 # print(binascii.b2a_hex(data))p
 
 
@@ -619,32 +701,38 @@ class udpclass:
     # , '127.0.0.1', 10000
 
 
+
 u = udpclass()
 # listen()
-# u.send_msg(u.build_msg('beat'),'127.0.0.1',5577) #自己
-# u.data_get()
+#u.send_msg(u.build_msg('beat'),'127.0.0.1',5577) #自己
+#u.data_get()
 
-# u.data_get()
+#u.data_get()
 
-# u.send_msg(u.build_msg('select'),'118.25.225.194',5577) #15日停的服务器
+#u.send_msg(u.build_msg('select'),'118.25.225.194',5577) #15日停的服务器
 
-# u.send_msg(u.build_msg('beat'), '119.23.138.79', 5577)  #任务服务器
+#u.send_msg(u.build_msg('beat'), '119.23.138.79', 5577)  #任务服务器
 
-# u.send_msg(u.build_msg('select'), '144.34.158.18', 5577) # 搬瓦工
-# thread.start_new_thread(u.send_msg,(u.build_msg('select'),'144.34.158.18',5577))
+#u.send_msg(u.build_msg('select'), '144.34.158.18', 5577) # 搬瓦工
+#thread.start_new_thread(u.send_msg,(u.build_msg('select'),'144.34.158.18',5577))
 
+timeout = 3 * 1  #
 
-# t1 = threading.Thread(target=u.send_msg,args=(u.build_msg('select'),'144.34.158.18',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("act_report",'119.23.138.79',5577))
 
-t2 = threading.Thread(target=u.data_get(), args=())
+t2 = threading.Thread(target=u.data_get(),args=())
+#print('11')
 t2.start()
 
-# while True:
-# t1.start()      # 并发
-# t2.start()      # 并发
-# time.sleep(1)
-# u.data_get()
-# u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
+
+
+#while True:
+    #print('11')
+#t1.start()      # 并发
+#t2.start()      # 并发
+#time.sleep(1)
+#u.data_get()
+#u.send_msg(u.build_msg('select'), '120.25.231.139', 5577) # 公司自有
 
 
 '''
