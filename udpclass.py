@@ -619,7 +619,7 @@ class udpclass:
         import socket, binascii
 
         HOST = ''  # use '' to expose to all networks
-        port = 5578
+        port = 5577
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.bind((HOST, port))
@@ -723,7 +723,7 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-#t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5578))
+#t1 = threading.Thread(target=u.send_msg,args=("first_reg",'144.34.158.18',5577))
 #t1.start()
 t2 = threading.Thread(target=u.data_get(),args=())
 #print('11')
