@@ -601,7 +601,7 @@ class udpclass:
                     print('other_data')
                     print(other_data)
                     print('other_data')
-                    print(self.create_answer(select_header,self.data_pick_select(other_data)))
+                    print(self.data_pick_select(other_data))
                     print('ff')
                 #print(repr(data))
                 print(addr[0])
