@@ -662,6 +662,7 @@ class udpclass:
                 elif '0x5' in data_cmdid_array:
                     print('config')
                     print(data_side)
+                    print(self.create_answer(select_header,self.data_pick_select(other_data)))
 
 
                 print(repr(data))
