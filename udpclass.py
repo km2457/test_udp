@@ -353,6 +353,7 @@ class udpclass:
 
     def build_msg(self, target, answer=1):
         now_data_values = self.get_data_values(target, answer)
+        print('now_data_value!')
         timestamp_mesc = int(round(t) * 1000)
         sequence = '0x1'
         header = '0XEF'
