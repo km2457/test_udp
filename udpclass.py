@@ -602,7 +602,7 @@ class udpclass:
             id = data[0:4]
             # print(id)
             pack_length = data[4:8]
-            pack = data[8:8 + int(pack_length, 16)]
+            pack = data[8:8 + int(pack_length, 16)*2]
             res.append(hex(int(id, 16)))
             res.append(pack)
             data = data[8 + int(pack_length, 16) * 2:]
