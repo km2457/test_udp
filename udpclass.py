@@ -116,6 +116,10 @@ class udpclass:
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x13':
+                        r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
+                        r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
+                        r.append(self.charToUnic2(args[1]).encode('utf-8'))  # string-escape .encode('ASCII')
                     elif args[0] == '0x14':
                         r.append(self.get_hight(15))
                         r.append(self.get_low(15))
@@ -198,6 +202,8 @@ class udpclass:
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x11':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x13':
+                        r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
                     elif args[0] == '0x14':
                         r += '4B' + str(15) + 's'
                     elif args[0] == '0x15':
@@ -257,6 +263,8 @@ class udpclass:
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x11':
                         r += len(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x13':
+                        r += len(self.charToUnic2(args[1]).encode('utf-8'))
                     elif args[0] == '0x14':
                         r += 15
                     elif args[0] == '0x15':
@@ -306,7 +314,7 @@ class udpclass:
                             '0x10', '98200940720187',  # 终端厂商编号 字符串
                             '0x11', '586356170700008',  # 终端序列号(SN) 字符串 固定15byte
                             '0x12', '1982934579',  # 终端版本号 unicode
-                            '0x13', '01H',  # 终端制式(LTE/2G等) #unicode
+                            '0x13', '01',  # 终端制式(LTE/2G等) #unicode
                             '0x14', '291868248829057',  # 终端IMEI号 字符串
                             '0x1f', '86141403,86141409',  # IMSI（支持多个IMSI号） unicode
                             )
@@ -351,7 +359,7 @@ class udpclass:
                 '0x3', '0',  # 周期性上报数据id
                 '0x11', '123456',  # 终端序列号(SN) 字符串
                 '0x20', '0',  # 无线网络信息;当终端为多通道时,包含多个本CMD
-                '0x6', '01H',  # 告警信息(如果有)
+                '0x6', '01',  # 告警信息(如果有)
 
             )
         elif data == 'config':
@@ -371,7 +379,7 @@ class udpclass:
             )
         elif data == 'report':
             result_value = (
-                # '0x6', len('01H'), '01H',  # 告警
+                # '0x6', len('01H'), '01',  # 告警
                 # '0x11', len('123456'), '123456',  # 终端序列号
             )
         elif data == 'return_select':
@@ -439,7 +447,7 @@ class udpclass:
 
     def send_msg_manage(self, data):
         data_all = data[16:-2]
-        data_cmdid_array = self.data_pick_select(data_all)
+        data_cmdid_array = self.data_pick_cmdid(data_all)
         print(data_cmdid_array)
         print(u'获得服务器回应')
         if '0x1' in data_cmdid_array:
@@ -586,7 +594,7 @@ class udpclass:
 
         return tuple(res)
 
-    def data_pick_select(self, data):
+    def data_pick_cmdid(self, data):
         res = []
         # print(data)
         while data:
@@ -640,15 +648,16 @@ class udpclass:
                 data_all = binascii.b2a_hex(data)[16:-2]
                 print(data_all)
 
-                data_cmdid_array = self.data_pick_select(data_all)
+                data_cmdid_array = self.data_pick_cmdid(data_all)
 
                 if '0x4' in data_cmdid_array:
                     self.send_msg('return_select', '119.23.138.79', 5577,
-                                  answer=self.create_answer(select_header, self.data_pick_select(other_data)))
+                                  answer=self.create_answer(select_header, self.data_pick_cmdid(other_data)))
                 elif '0x5' in data_cmdid_array:
                     print('config')
-                    print(data_side)
-                    print(self.create_answer(select_header, self.data_pick_select(other_data)))
+                    #print(other_data)
+                    #print(data_side)
+                    print(self.create_answer(select_header, self.data_pick_cmdid(data_side)))
 
                 print(repr(data))
                 print(addr[0])
