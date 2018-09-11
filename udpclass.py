@@ -569,51 +569,6 @@ class udpclass:
 
         return res
 
-    def create_answer(header, data):
-        #print(data)
-
-        if '0x11' in data_pick_select(other_data):
-            res = ['0x4', header]
-        else:
-            res = ['0x4', header, '0x11', '586356170700002']
-
-        for i in data:
-            res.append(i)
-            # res.append("123456")
-            if i == '0x10':  # 终端序列号(SN)0
-                res.append("586356170700002")
-            elif i == '0x11':  # 终端序列号(SN)0
-                res.append("586356170700002")
-            elif i == '0x12':  # 终端版本号O
-                res.append("111")
-            elif i == '0x13':  # 终端制式(LTE/2G等)O
-                res.append("01H")
-            elif i == '0x14':  # 终端IMEI号O
-                res.append("111111")
-            elif i == '0x16':  # 终端能力级别
-                res.append("1")
-            elif i == '0x17':  # 终端型号
-                res.append("11")
-            elif i == '0x20':  # 终端无线网络信息
-                res.append("11")
-            elif i == '0x24':  # 业务流量统计
-                res.append("11")
-            elif i == '0x25':  # 网管流量统计
-                res.append("11")
-            elif i == '0x30':  # 终端CPU占用率
-                res.append("20")
-            elif i == '0x31':  # 终端内存使用率
-                res.append("20")
-            elif i == '0x32':  # 流量异常信息
-                res.append("2")
-            elif i == '0x35':  # 终端温度
-                res.append("1")
-            elif i == '0x36':  # 信号强度弱
-                res.append("1")
-            elif i == '0x37':  # 信噪比（信号质量）
-                res.append("1")
-
-        return tuple(res)
 
     def data_get(self):
         import socket, binascii
@@ -653,10 +608,7 @@ class udpclass:
                 data_cmdid_array = self.data_pick_select(data_all)
 
                 if '0x4' in data_cmdid_array:
-                    self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header,
-                                                                                            self.data_pick_select(
-                                                                                                other_data))), addr[0],
-                                  addr[1])
+                    self.send_msg(self.build_msg('return_select', answer=self.create_answer(select_header,self.data_pick_select(other_data))),addr[0],addr[1])
 
 
                 print(repr(data))
@@ -681,7 +633,7 @@ class udpclass:
 
 
 
-                exit()
+                #exit()
                 '''
                 if '0x1' in data_cmdid_array:
                     if '0x10' in data_cmdid_array:
@@ -723,7 +675,7 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-#t1 = threading.Thread(target=u.send_msg,args=("first_reg",'144.34.158.18',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5577))
 #t1.start()
 t2 = threading.Thread(target=u.data_get(),args=())
 #print('11')
