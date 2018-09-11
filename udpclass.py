@@ -589,6 +589,7 @@ class udpclass:
                 # send_msg(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))), '119.23.138.79', 5577)
 
                 data_all = binascii.b2a_hex(data)[16:-2]
+                print('dataall!!!!!!!')
                 print(data_all)
 
                 data_cmdid_array = self.data_pick_select(data_all)
