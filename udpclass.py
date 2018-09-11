@@ -604,16 +604,8 @@ class udpclass:
             pack_length = data[4:8]
             pack = data[8:8 + int(pack_length, 16)]
             res.append(hex(int(id, 16)))
+            res.append(pack)
             data = data[8 + int(pack_length, 16) * 2:]
-
-        '''
-        res = []
-        r = len(data) / 8
-        for i in range(0, r):
-            res.append(hex(int(data[0:4], 16)))
-            data = data[8:]
-
-        '''
 
         return res
 
