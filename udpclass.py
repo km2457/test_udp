@@ -641,7 +641,7 @@ class udpclass:
                 #print(repr(data))
                 #print(addr[0])
                 #print(addr[1])
-                print(data_cmdid_array)
+                #print(data_cmdid_array)
 
 
 
