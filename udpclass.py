@@ -598,7 +598,7 @@ class udpclass:
                     #print(binascii.hexlify(data))
                     #print(other_data)
                     #print(data_side)
-                    y = self.create_answer(select_header, self.data_pick_cmdid(data_side))
+                    y = self.data_pick_cmdid(data_side)
                     #print(y)
                     #print()
                     #print(binascii.unhexlify(y))
