@@ -614,7 +614,7 @@ class udpclass:
                             if len(r) == 8:
                                 pick_new.append(int(r,16))
                             else:
-                                pick_new.append(binascii.unhexlify(r).encode('utf-8'))
+                                pick_new.append(binascii.unhexlify(r).decode('utf-8'))
                         except:
                             pick_new.append(r)
 
