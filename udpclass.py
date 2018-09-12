@@ -582,7 +582,7 @@ class udpclass:
                 other_data = data_side[8 + select_msg_pack_legth * 2:]
                 select_header = data_side[8:select_msg_pack_legth * 2]
 
-
+                print(data)
                 data_all = binascii.b2a_hex(data)[16:-2]
                 print('nizhuan')
                 print(binascii.unhexlify(data_side))
