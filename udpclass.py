@@ -604,7 +604,7 @@ class udpclass:
                     #print(binascii.unhexlify(y))
                     t = 0
                     pick_new = []
-
+                    new = {}
                     for r in y:
 
 
@@ -621,7 +621,9 @@ class udpclass:
 
 
 
-
+                    for i in pick_new:
+                        new[i] = pick_new[1]
+                        pick_new = pick_new[2:]
 
 
 
@@ -629,7 +631,7 @@ class udpclass:
                         #print(r)
                         #print(t)
                         t += 1
-                print(pick_new)
+                print(new)
                 print(repr(data))
                 print(addr[0])
                 print(addr[1])
