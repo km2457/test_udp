@@ -617,7 +617,7 @@ class udpclass:
                             pick_new.append(r)
 
 
-                print(pick_new)
+
 
 
 
@@ -625,8 +625,9 @@ class udpclass:
 
 
                         #print(r)
-                        print(t)
+                        #print(t)
                         t += 1
+                print(pick_new)
                 print(repr(data))
                 print(addr[0])
                 print(addr[1])
