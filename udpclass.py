@@ -601,9 +601,12 @@ class udpclass:
                     y = self.create_answer(select_header, self.data_pick_cmdid(data_side))
                     print(y)
                     print()
-                    print(binascii.unhexlify(y))
-
-
+                    #print(binascii.unhexlify(y))
+                    t = 0
+                    for r in y:
+                        print(binascii.unhexlify(r))
+                        print(t)
+                        t += 1
                 print(repr(data))
                 print(addr[0])
                 print(addr[1])
