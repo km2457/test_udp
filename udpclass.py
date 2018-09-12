@@ -594,13 +594,13 @@ class udpclass:
                     self.send_msg('return_select', '119.23.138.79', 5577,
                                   answer=self.create_answer(select_header, self.data_pick_cmdid(other_data)))
                 elif '0x5' in data_cmdid_array:
-                    print('config')
-                    print(binascii.hexlify(data))
+                    #print('config')
+                    #print(binascii.hexlify(data))
                     #print(other_data)
                     #print(data_side)
                     y = self.create_answer(select_header, self.data_pick_cmdid(data_side))
-                    print(y)
-                    print()
+                    #print(y)
+                    #print()
                     #print(binascii.unhexlify(y))
                     t = 0
                     pick_new = []
@@ -630,17 +630,17 @@ class udpclass:
                         #print(t)
                         t += 1
                 res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
-
+                print('get config msg')
                 for x, y in res_dict.items():
                     print("cmdid:" + str(x)+" value:" + str(y))
                     #print("value:" + str(y))
 
                 #print(pick_new)
-                print(res_dict)
-                print(repr(data))
-                print(addr[0])
-                print(addr[1])
-                print(data_cmdid_array)
+                #print(res_dict)
+                #print(repr(data))
+                #print(addr[0])
+                #print(addr[1])
+                #print(data_cmdid_array)
 
 
 
