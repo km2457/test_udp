@@ -630,6 +630,11 @@ class udpclass:
                         #print(t)
                         t += 1
                 res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
+
+                for x, y in res_dict.items():
+                    print("cmdid:" + str(x)+" value:" + str(y))
+                    #print("value:" + str(y))
+
                 #print(pick_new)
                 print(res_dict)
                 print(repr(data))
