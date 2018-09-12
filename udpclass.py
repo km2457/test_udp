@@ -605,6 +605,16 @@ class udpclass:
                     t = 0
                     for r in y:
                         #print(binascii.unhexlify(r))
+
+                        try:
+                            print(binascii.unhexlify(r))
+                        except MyException, e:
+                            print(r)
+
+
+
+
+
                         print(r)
                         print(t)
                         t += 1
