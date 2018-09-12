@@ -416,10 +416,6 @@ class udpclass:
         pack_length_hight = self.get_hight(pack_length)
         pack_length_low = self.get_low(pack_length)
         timestamp_mesc_last4byte = long(hex(timestamp_mesc)[-9:-1], 16)
-        # print(hex(timestamp_mesc)[-8:])
-        # print(hex(timestamp_mesc)[-8:])
-        # print(long('20f41c8L',16))
-        # print(timestamp_mesc_last4byte)
         new_values = [int(header, 16), 1, timestamp_mesc_last4byte, pack_length_hight,
                       pack_length_low] + self.create_values(
             *now_data_values)
@@ -427,11 +423,6 @@ class udpclass:
         a = struct.Struct('>BBLBB' + self.create_index(*now_data_values))
         result_nochecksum = a.pack(*new_values)
         checksum = self.ichecksum3(self.ichecksum_change((binascii.hexlify(result_nochecksum[6:]))))
-        # print('555')
-        # print(binascii.hexlify(result_nochecksum[6:]))
-        # print('555')
-        # checksum = self.ichecksum3(self.ichecksum_change((binascii.hexlify(result_nochecksum[6:]))))
-
         new_values.append(checksum)
         b = struct.Struct('>BBLBB' + self.create_index(*now_data_values) + 'B')
         result = b.pack(*new_values)
@@ -503,45 +494,7 @@ class udpclass:
                 c += 1
             # print(1)
 
-        '''
-        while True:
-            # 接收来自客户端的数据,使用recvfrom
 
-            print(end)
-            if int(end-start)==3:
-                print('Warning: Timeout!!'*5)
-                break
-
-
-            time.sleep(2)
-            data, addr = s.recvfrom(1024)
-
-
-            print('Received from %s:%s.' % addr)
-            print('res')
-            print(binascii.b2a_hex(data))
-        '''
-        '''
-            data_all = binascii.b2a_hex(data)[16:-2]
-            data_cmdid_array = self.data_pick_select(data_all)
-            #print(data_all)
-            #exit()
-
-
-            if '0x1' in data_cmdid_array:
-                if '0x10' in data_cmdid_array:
-                    #self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
-                    print(u'没有注册,发送')
-                else:
-                    print(u'完全正确')
-                    return "1"
-            elif '0x2' in data_cmdid_array:
-                print(u"已收到心跳包回复")
-            elif '0x4' in data_cmdid_array:
-                print(u"查询信息")
-                self.send_msg(self.build_msg('return_select', answer=self.create_answer(self.select_header, self.data_pick_select(other_data))),
-                         addr[0], addr[1])
-        '''
 
         # exit()
 
@@ -625,17 +578,10 @@ class udpclass:
                 data, addr = s.recvfrom(4096)
                 if not data: break
                 data_side = binascii.b2a_hex(data)[16:-2]
-                # select_msg_id = int(data_side[0:4], 16)
-                # select_msg_pack_legth = int(data_side[4:8], 16)
                 select_msg_pack_legth = int(data_side[4:8], 16)
                 other_data = data_side[8 + select_msg_pack_legth * 2:]
                 select_header = data_side[8:select_msg_pack_legth * 2]
 
-                # print('0x11' in data_pick_select(other_data))
-                # print(create_answer(select_header,data_pick_select(other_data)))
-                # build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data)))
-                # send_msg(build_msg('return_select',answer=create_answer(select_header,data_pick_select(other_data))), '127.0.0.1', 5578)
-                # send_msg(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))), '119.23.138.79', 5577)
 
                 data_all = binascii.b2a_hex(data)[16:-2]
                 print('nizhuan')
@@ -650,49 +596,19 @@ class udpclass:
                 elif '0x5' in data_cmdid_array:
                     print('config')
                     print(binascii.hexlify(data))
-
                     #print(other_data)
-
                     #print(data_side)
-                    print(self.create_answer(select_header, self.data_pick_cmdid(data_side)))
+                    y = self.create_answer(select_header, self.data_pick_cmdid(data_side))
+                    print(y)
+                    print()
+                    print(binascii.unhexlify(y))
+
 
                 print(repr(data))
                 print(addr[0])
                 print(addr[1])
                 print(data_cmdid_array)
 
-                '''
-                print(repr(data_cmdid_array))
-                if '0x1' in data_cmdid_array:
-                    if '0x10' in data_cmdid_array:
-                        #self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
-                        print(u'没有注册,需要发送整个数据')
-                    else:
-                        print(u'完全正确')
-                        return "1"
-                elif '0x2' in data_cmdid_array:
-                    print(u"已收到心跳包回复")
-                '''
-                # time.sleep(2)
-
-                # exit()
-                '''
-                if '0x1' in data_cmdid_array:
-                    if '0x10' in data_cmdid_array:
-                        self.send_msg(u.build_msg('first_reg'), '119.23.138.79', 5577)
-                        print(u'没有注册,发送')
-                    else:
-                        print(u'完全正确')
-                        return "1"
-                elif '0x2' in data_cmdid_array:
-                    print(u"已收到心跳包回复")
-                '''
-                # print(s.getpeername())
-                # print(s.getsockname())
-                # s.sendall(build_msg('return_select', answer=create_answer(select_header, data_pick_select(other_data))))
-                # print(addr[0])
-                # exit()
-                # print(binascii.b2a_hex(data))p
 
 
         except KeyboardInterrupt:
