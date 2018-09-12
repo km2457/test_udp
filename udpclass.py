@@ -604,7 +604,8 @@ class udpclass:
                     #print(binascii.unhexlify(y))
                     t = 0
                     for r in y:
-                        print(binascii.unhexlify(r))
+                        #print(binascii.unhexlify(r))
+                        print(r)
                         print(t)
                         t += 1
                 print(repr(data))
