@@ -629,7 +629,9 @@ class udpclass:
                         #print(r)
                         #print(t)
                         t += 1
-                print(pick_new)
+                res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
+                #print(pick_new)
+                print(res_dict)
                 print(repr(data))
                 print(addr[0])
                 print(addr[1])
