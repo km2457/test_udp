@@ -616,7 +616,7 @@ class udpclass:
 
 
 
-                        print(r)
+                        #print(r)
                         print(t)
                         t += 1
                 print(repr(data))
