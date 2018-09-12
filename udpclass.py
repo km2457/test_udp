@@ -608,8 +608,9 @@ class udpclass:
 
                         try:
                             print(binascii.unhexlify(r))
-                        except MyException, e:
+                        except:
                             print(r)
+
 
 
 
