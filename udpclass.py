@@ -611,9 +611,11 @@ class udpclass:
                         try:
 
                             binascii.unhexlify(r)
-                            pick_new.append(binascii.unhexlify(r))
+                            if len(r) == 8:
+                                pick_new.append(int(r,16))
+                            else:
+                                pick_new.append(binascii.unhexlify(r))
                         except:
-
                             pick_new.append(r)
 
 
