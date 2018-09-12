@@ -603,13 +603,21 @@ class udpclass:
                     print()
                     #print(binascii.unhexlify(y))
                     t = 0
+                    pick_new = []
+
                     for r in y:
-                        #print(binascii.unhexlify(r))
+
 
                         try:
-                            print(binascii.unhexlify(r))
+
+                            binascii.unhexlify(r)
+                            pick_new.append(binascii.unhexlify(r))
                         except:
-                            print(r)
+
+                            pick_new.append(r)
+
+
+                print(pick_new)
 
 
 
