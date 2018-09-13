@@ -652,12 +652,15 @@ class udpclass:
                         if x in ('0x50','0x51','0x52','0x53','0x56'):
                             res_dict[x] = int(y,16)
                         elif x in ('0x41','0x42','0x43'):
-                            res_dict[x] = binascii.unhexlify(y).decode('unicode-escape').encode('utf-8').decode('utf-8')
+                            res_dict[x] = binascii.unhexlify(y).decode('unicode-escape')
+
                             #res_dict[x] = y.decode('unicode-escape')
                         elif x in ('0x55'):
                             res_dict[x] = y.decode('utf-8')
 
+                    for x, y in res_dict.items():
 
+                        print("cmdid:" + str(x) + " value:" + str(y))
 
 
                     print(res_dict)
