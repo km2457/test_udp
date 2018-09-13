@@ -583,7 +583,11 @@ class udpclass:
             pack = data[8:8 + int(pack_length, 16)*2]
 
             res.append(hex(int(id, 16)))
-            res.append(pack)
+            if hex(int(id, 16)) == '0x55':
+                res.append(socket.inet_ntoa(pack))
+            else:
+                res.append(pack)
+
             data = data[8 + int(pack_length, 16) * 2:]
 
         return res
