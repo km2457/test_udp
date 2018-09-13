@@ -645,7 +645,8 @@ class udpclass:
                     pick_new = []
                     new = {}
                     res_dict = dict(zip(y[::2], y[1::2]))
-
+                    print('res')
+                    print(res_dict)
                     '''
                     for r in y:
                         try:
