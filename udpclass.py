@@ -676,7 +676,7 @@ class udpclass:
                         #print(r)
                         #print(t)
                         t += 1
-                print(pick_new)
+
                 res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
                 print('get config msg')
                 for x, y in res_dict.items():
