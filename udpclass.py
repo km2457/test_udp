@@ -610,15 +610,15 @@ class udpclass:
             elif i == '0x20':  # 终端无线网络信息
                 res.append("11")
             elif i == '0x24':  # 业务流量统计
-                res.append("11")
+                res.append(11)
             elif i == '0x25':  # 网管流量统计
-                res.append("11")
+                res.append(11)
             elif i == '0x30':  # 终端CPU占用率
                 res.append(20)
             elif i == '0x31':  # 终端内存使用率
                 res.append(20)
             elif i == '0x32':  # 流量异常信息
-                res.append("2")
+                res.append(2)
             elif i == '0x35':  # 终端温度
                 res.append(1)
             elif i == '0x36':  # 信号强度弱
