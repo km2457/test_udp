@@ -644,6 +644,9 @@ class udpclass:
                     t = 0
                     pick_new = []
                     new = {}
+                    res_dict = dict(zip(y[::2], y[1::2]))
+
+                    '''
                     for r in y:
                         try:
                             binascii.unhexlify(r) #16禁止转
@@ -664,6 +667,7 @@ class udpclass:
 
                             print('this')
                             print(repr(r))
+                    '''
 
 
 
@@ -673,9 +677,6 @@ class udpclass:
 
 
 
-                        #print(r)
-                        #print(t)
-                        t += 1
 
                 res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
                 print('get config msg')
