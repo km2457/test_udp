@@ -636,17 +636,17 @@ class udpclass:
                     #print(binascii.hexlify(data))
                     #print(other_data)
                     #print(data_side)
-                    yes = self.data_pick_cmdid(data_side)
-                    print(yes)
+                    y = self.data_pick_cmdid(data_side)
+                    print(y)
                     #print(y)
                     #print()
                     #print(binascii.unhexlify(y))
                     t = 0
                     pick_new = []
                     new = {}
-                    for r in yes:
+                    for r in y:
                         try:
-                            binascii.unhexlify(r) #16进制转2进制
+                            binascii.unhexlify(r) #16禁止转
                             print(repr(r))
                             if len(r) == 8:
                                 pick_new.append(int(r.encode('hex'),16))
@@ -655,9 +655,13 @@ class udpclass:
                                 pick_new.append(binascii.unhexlify(r).decode('unicode-escape'))
                         except:
 
+                            try:
+                                int(r,16)
+                                pick_new.append(int(r,16))
+                            except:
+                                pick_new.append(r)
 
-
-                            pick_new.append(r)
+                            #pick_new.append(r)
 
                             print('this')
                             print(repr(r))
@@ -673,8 +677,8 @@ class udpclass:
                         #print(r)
                         #print(t)
                         t += 1
-                #print(pick_new)
-                res_dict = dict(zip(yes[::2], yes[1::2]))
+                print(pick_new)
+                res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
                 print('get config msg')
                 for x, y in res_dict.items():
                     print("cmdid:" + str(x)+" value:" + str(y))
