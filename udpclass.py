@@ -635,7 +635,7 @@ class udpclass:
                     for r in y:
                         try:
                             binascii.unhexlify(r)
-
+                            print(repr(r))
                             if len(r) == 8:
                                 pick_new.append(int(r.encode('hex'),16))
                                 print('help')
