@@ -640,7 +640,7 @@ class udpclass:
                                 pick_new.append(binascii.unhexlify(r).decode('unicode-escape'))
                         except:
                             pick_new.append(r)
-                            print(r)
+                            print(repr(r))
 
 
 
@@ -690,7 +690,7 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-#t1 = threading.Thread(target=u.send_msg,args=("config",'144.34.158.18',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("config",'118.25.225.194',5577))
 #t1.start()
 t2 = threading.Thread(target=u.data_get(), args=())
 # print('11')
