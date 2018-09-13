@@ -648,7 +648,7 @@ class udpclass:
                     #print('res')
                     print(res_dict)
 
-                    for qwe in y:
+                    for qwe in res_dict:
                         print(qwe)
                     '''
                     for r in y:
