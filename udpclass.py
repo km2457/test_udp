@@ -684,7 +684,7 @@ class udpclass:
                         print("cmdid:" + str(x) + " value:" + str(binascii.unhexlify(y).decode('unicode-escape')))
                     else:
                         print("cmdid:" + str(x)+" value:" + str(y))
-                        
+
                     #print("value:" + str(y))
 
                 #print(pick_new)
