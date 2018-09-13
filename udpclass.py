@@ -584,7 +584,7 @@ class udpclass:
 
             res.append(hex(int(id, 16)))
             if hex(int(id, 16)) == '0x55':
-                res.append(socket.inet_ntoa(pack))
+                res.append(socket.inet_ntoa(pack.decode('hex')))
             else:
                 res.append(pack)
 
