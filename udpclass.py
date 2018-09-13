@@ -109,9 +109,17 @@ class udpclass:
                         r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
                         r.append(self.charToUnic2(args[1]).encode('utf-8'))  # string-escape .encode('ASCII')
                     elif args[0] == '0x13':
-                        r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
-                        r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
-                        r.append(self.charToUnic2(args[1]).encode('utf-8'))  # string-escape .encode('ASCII')
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
+                        r.append(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x17':
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
+                        r.append(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x20':
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
+                        r.append(args[1].encode('unicode_escape'))
                     elif args[0] == '0x54':
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
@@ -150,7 +158,7 @@ class udpclass:
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
-                    elif args[0] == '0x15':
+                    elif args[0] == '0x17':
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
@@ -158,11 +166,31 @@ class udpclass:
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x24':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
+                    elif args[0] == '0x25':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
                     elif args[0] == '0x30':
                         r.append(self.get_hight(4))
                         r.append(self.get_low(4))
                         r.append(args[1])
                     elif args[0] == '0x31':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
+                    elif args[0] == '0x35':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
+                    elif args[0] == '0x36':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
+                    elif args[0] == '0x37':
                         r.append(self.get_hight(4))
                         r.append(self.get_low(4))
                         r.append(args[1])
@@ -213,7 +241,7 @@ class udpclass:
                     elif args[0] == '0x6':
                         r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
                     elif args[0] == '0x13':
-                        r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x54':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x55':
@@ -235,9 +263,19 @@ class udpclass:
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x1f':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x24':
+                        r += '4BL'
+                    elif args[0] == '0x25':
+                        r += '4BL'
                     elif args[0] == '0x30':
                         r += '4BL'
                     elif args[0] == '0x31':
+                        r += '4BL'
+                    elif args[0] == '0x35':
+                        r += '4BL'
+                    elif args[0] == '0x36':
+                        r += '4BL'
+                    elif args[0] == '0x37':
                         r += '4BL'
                     elif args[0] == '0x50':
                         r += '4BL'
@@ -270,13 +308,13 @@ class udpclass:
                 if self.is_number(args[1]) == False:
 
                     if args[0] == '0x1f':
-                        r += len(self.charToUnic2(args[1]).encode('utf-8'))
+                        r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x16':
                         r += len(self.charToUnic2(args[1]).encode('utf-8'))
                     elif args[0] == '0x6':
                         r += len(self.charToUnic2(args[1]).encode('utf-8'))
                     elif args[0] == '0x13':
-                        r += len(self.charToUnic2(args[1]).encode('utf-8'))
+                        r += len(args[1].encode('unicode_escape'))
                     if args[0] == '0x54':
                         r += len(args[1].encode('unicode_escape'))
                     if args[0] == '0x55':
@@ -298,10 +336,20 @@ class udpclass:
                     elif args[0] == '0x15':
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x1f':
-                        r += len(self.charToUnic2(args[1]).encode('utf-8'))
+                        r += len(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x24':
+                        r += 4
+                    elif args[0] == '0x25':
+                        r += 4
                     elif args[0] == '0x30':
                         r += 4
                     elif args[0] == '0x31':
+                        r += 4
+                    elif args[0] == '0x35':
+                        r += 4
+                    elif args[0] == '0x36':
+                        r += 4
+                    elif args[0] == '0x37':
                         r += 4
                     elif args[0] == '0x50':
                         r += 4
@@ -572,11 +620,11 @@ class udpclass:
             elif i == '0x32':  # 流量异常信息
                 res.append("2")
             elif i == '0x35':  # 终端温度
-                res.append("1")
+                res.append(1)
             elif i == '0x36':  # 信号强度弱
-                res.append("1")
+                res.append(1)
             elif i == '0x37':  # 信噪比（信号质量）
-                res.append("1")
+                res.append(1)
 
         return tuple(res)
 
@@ -637,6 +685,8 @@ class udpclass:
                     #print(other_data)
                     #print(data_side)
                     y = self.data_pick_cmdid(data_side)
+
+
                     print(y)
                     #print(y)
                     #print()
@@ -648,13 +698,17 @@ class udpclass:
                     #print('res')
                     print(res_dict)
 
-                    for x,y in res_dict.items():
-                        if x in ('0x50','0x51','0x52','0x53','0x56'):
-                            res_dict[x] = int(y,16)
-                        elif x in ('0x41','0x42','0x43','0x54'):
-                            res_dict[x] = binascii.unhexlify(y).decode('unicode-escape').decode('unicode-escape')
-
-                            #res_dict[x] = y.decode('unicode-escape')
+                    for x, y in res_dict.items():
+                        if x in ('0x50', '0x51', '0x52', '0x53', '0x56'):
+                            res_dict[x] = int(y, 16)
+                        elif x in ('0x41', '0x42', '0x43'):
+                            # res_dict[x] = binascii.unhexlify(y).decode('unicode-escape')
+                            res_dict[x] = binascii.unhexlify(y).decode('unicode-escape')
+                            print(binascii.unhexlify(y).decode('unicode-escape'))
+                        elif x in ('0x54'):
+                            # res_dict[x] = binascii.unhexlify(y).decode('unicode-escape')
+                            res_dict[x] = binascii.unhexlify(y).decode('utf-8')
+                            print(binascii.unhexlify(y).decode('utf-8'))
                         elif x in ('0x55'):
                             res_dict[x] = y.decode('utf-8')
 
@@ -738,7 +792,7 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-#t1 = threading.Thread(target=u.send_msg,args=("first_reg",'118.25.225.194',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("select",'118.25.225.194',5577))
 #t1.start()
 t2 = threading.Thread(target=u.data_get(), args=())
 # print('11')
