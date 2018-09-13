@@ -628,7 +628,7 @@ class udpclass:
 
         return tuple(res)
 
-    def data_pick_cmdid(self, data):
+    def data_pick_cmdid(self, data,type=1):
         res = []
         # print(data)
         while data:
@@ -639,10 +639,13 @@ class udpclass:
             pack = data[8:8 + int(pack_length, 16)*2]
 
             res.append(hex(int(id, 16)))
-            if hex(int(id, 16)) == '0x55':
-                res.append(socket.inet_ntoa(pack.decode('hex')))
+            if type == 1:
+                if hex(int(id, 16)) == '0x55':
+                    res.append(socket.inet_ntoa(pack.decode('hex')))
+                else:
+                    res.append(pack)
             else:
-                res.append(pack)
+                pass
 
             data = data[8 + int(pack_length, 16) * 2:]
 
@@ -678,7 +681,7 @@ class udpclass:
 
                 if '0x4' in data_cmdid_array:
                     print('for 0x4')
-                    print(self.data_pick_cmdid(other_data))
+                    print(self.data_pick_cmdid(other_data,type=2))
                     #self.send_msg('return_select', '119.23.138.79', 5577,answer=self.create_answer(select_header, self.data_pick_cmdid(other_data)))
                 elif '0x5' in data_cmdid_array:
                     print('config')
