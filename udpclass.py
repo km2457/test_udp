@@ -677,6 +677,7 @@ class udpclass:
                 data_cmdid_array = self.data_pick_cmdid(data_all)
 
                 if '0x4' in data_cmdid_array:
+                    print('for 0x4')
                     self.send_msg('return_select', '119.23.138.79', 5577,
                                   answer=self.create_answer(select_header, self.data_pick_cmdid(other_data)))
                 elif '0x5' in data_cmdid_array:
