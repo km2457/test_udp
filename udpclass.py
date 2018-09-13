@@ -634,6 +634,7 @@ class udpclass:
                         try:
 
                             binascii.unhexlify(r)
+                            socket.inet_ntoa(r)
                             if len(r) == 8:
 
                                 pick_new.append(int(r.encode('hex'),16))
