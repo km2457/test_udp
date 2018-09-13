@@ -648,8 +648,15 @@ class udpclass:
                     #print('res')
                     print(res_dict)
 
-                    for qwe in res_dict:
-                        print(qwe)
+                    for x,y in res_dict:
+                        if x in ('0x51','0x52','0x53'):
+                            res_dict[x] = int(y,16)
+
+
+                    print(res_dict)
+
+
+
                     '''
                     for r in y:
                         try:
