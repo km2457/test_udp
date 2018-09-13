@@ -620,10 +620,10 @@ class udpclass:
                 other_data = data_side[8 + select_msg_pack_legth * 2:]
                 select_header = data_side[8:select_msg_pack_legth * 2]
 
-                print(repr(data))
+                #print(repr(data))
                 data_all = binascii.b2a_hex(data)[16:-2]
 
-                print(binascii.unhexlify(data_side))
+                #print(binascii.unhexlify(data_side))
                 #print(data_all)
 
                 data_cmdid_array = self.data_pick_cmdid(data_all)
@@ -637,7 +637,7 @@ class udpclass:
                     #print(other_data)
                     #print(data_side)
                     y = self.data_pick_cmdid(data_side)
-                    #print(y)
+                    print(y)
                     #print(y)
                     #print()
                     #print(binascii.unhexlify(y))
@@ -645,8 +645,11 @@ class udpclass:
                     pick_new = []
                     new = {}
                     res_dict = dict(zip(y[::2], y[1::2]))
-                    print('res')
+                    #print('res')
                     print(res_dict)
+
+                    for qwe in y:
+                        print(qwe)
                     '''
                     for r in y:
                         try:
