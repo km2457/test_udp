@@ -624,6 +624,7 @@ class udpclass:
                     #print(other_data)
                     #print(data_side)
                     y = self.data_pick_cmdid(data_side)
+                    print(y)
                     #print(y)
                     #print()
                     #print(binascii.unhexlify(y))
@@ -634,9 +635,8 @@ class udpclass:
                         try:
 
                             binascii.unhexlify(r)
-                            socket.inet_ntoa(r)
+
                             if len(r) == 8:
-                                print(len(r))
                                 pick_new.append(int(r.encode('hex'),16))
                                 print('help')
                             else:
