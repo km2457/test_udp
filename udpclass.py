@@ -635,13 +635,14 @@ class udpclass:
 
                             binascii.unhexlify(r)
                             if len(r) == 8:
-                                print(len())
+
                                 pick_new.append(int(r.encode('hex'),16))
                                 print('help')
                             else:
                                 pick_new.append(binascii.unhexlify(r).decode('unicode-escape'))
                         except:
                             pick_new.append(r)
+                            print('this')
                             print(repr(r))
 
 
