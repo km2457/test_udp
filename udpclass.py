@@ -678,15 +678,15 @@ class udpclass:
 
 
 
-
-                res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
+                '''
+                #res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
                 print('get config msg')
                 for x, y in res_dict.items():
                     if str(x) in ['0x41','0x42','0x43']:
                         print("cmdid:" + str(x) + " value:" + str(binascii.unhexlify(y).decode('unicode-escape')))
                     else:
                         print("cmdid:" + str(x)+" value:" + str(y))
-
+                '''
                     #print("value:" + str(y))
 
                 #print(pick_new)
