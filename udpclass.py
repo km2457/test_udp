@@ -581,6 +581,7 @@ class udpclass:
             # print(id)
             pack_length = data[4:8]
             pack = data[8:8 + int(pack_length, 16)*2]
+
             res.append(hex(int(id, 16)))
             res.append(pack)
             data = data[8 + int(pack_length, 16) * 2:]
@@ -609,7 +610,7 @@ class udpclass:
 
                 print(repr(data))
                 data_all = binascii.b2a_hex(data)[16:-2]
-                print('nizhuan')
+
                 print(binascii.unhexlify(data_side))
                 #print(data_all)
 
@@ -633,7 +634,6 @@ class udpclass:
                     new = {}
                     for r in y:
                         try:
-
                             binascii.unhexlify(r)
 
                             if len(r) == 8:
