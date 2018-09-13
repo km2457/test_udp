@@ -653,6 +653,9 @@ class udpclass:
                             res_dict[x] = int(y,16)
                         elif x in ('0x41','0x42','0x43'):
                             res_dict[x] = y.decode('unicode-escape')
+                        elif x in ('0x55'):
+                            res_dict[x] = y.decode('utf-8')
+
 
 
 
