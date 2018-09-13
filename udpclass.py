@@ -682,7 +682,7 @@ class udpclass:
                 if '0x4' in data_cmdid_array:
                     print('for 0x4')
                     print(self.create_answer(select_header, self.data_pick_cmdid(other_data,type=2)))
-                    #self.send_msg('return_select', '119.23.138.79', 5577,answer=self.create_answer(select_header, self.data_pick_cmdid(other_data,type=2)))
+                    self.send_msg('return_select', '119.23.138.79', 5577,answer=self.create_answer(select_header, self.data_pick_cmdid(other_data,type=2)))
                 elif '0x5' in data_cmdid_array:
                     print('config')
                     #print(binascii.hexlify(data))
