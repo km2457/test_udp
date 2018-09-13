@@ -101,9 +101,9 @@ class udpclass:
                 if self.is_number(args[1]) == False:
 
                     if args[0] == '0x1f':
-                        r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
-                        r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
-                        r.append(self.charToUnic2(args[1]).encode('utf-8'))  # string-escape .encode('ASCII')
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
+                        r.append(args[1].encode('unicode_escape'))
                     elif args[0] == '0x6':
                         r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
                         r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
@@ -134,10 +134,14 @@ class udpclass:
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x12':
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
+                        r.append(args[1].encode('unicode_escape'))
                     elif args[0] == '0x13':
-                        r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
-                        r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
-                        r.append(self.charToUnic2(args[1]).encode('utf-8'))  # string-escape .encode('ASCII')
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
+                        r.append(args[1].encode('unicode_escape'))
                     elif args[0] == '0x14':
                         r.append(self.get_hight(15))
                         r.append(self.get_low(15))
@@ -151,9 +155,9 @@ class udpclass:
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
                     elif args[0] == '0x1f':
-                        r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
-                        r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
-                        r.append(self.charToUnic2(args[1]).encode('utf-8'))  # string-escape .encode('ASCII')
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
+                        r.append(args[1].encode('unicode_escape'))
                     elif args[0] == '0x30':
                         r.append(self.get_hight(4))
                         r.append(self.get_low(4))
@@ -205,7 +209,7 @@ class udpclass:
                 if self.is_number(args[1]) == False:
 
                     if args[0] == '0x1f':
-                        r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x6':
                         r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
                     elif args[0] == '0x13':
@@ -221,14 +225,16 @@ class udpclass:
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x11':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x12':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x13':
-                        r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x14':
                         r += '4B' + str(15) + 's'
                     elif args[0] == '0x15':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x1f':
-                        r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x30':
                         r += '4BL'
                     elif args[0] == '0x31':
@@ -283,8 +289,10 @@ class udpclass:
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x11':
                         r += len(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x12':
+                        r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x13':
-                        r += len(self.charToUnic2(args[1]).encode('utf-8'))
+                        r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x14':
                         r += 15
                     elif args[0] == '0x15':
@@ -333,10 +341,10 @@ class udpclass:
             result_value = ('0x1', '',  # 注册 必须在第一个子包 为必要发
                             '0x10', '98200940720187',  # 终端厂商编号 字符串
                             '0x11', '586356170700008',  # 终端序列号(SN) 字符串 固定15byte
-                            '0x12', '1982934579',  # 终端版本号 unicode
-                            '0x13', '01',  # 终端制式(LTE/2G等) #unicode
+                            '0x12', '1982934579',  # 终端版本号 unicode  字符
+                            '0x13', '01',  # 终端制式(LTE/2G等) #unicode  字符
                             '0x14', '291868248829057',  # 终端IMEI号 字符串
-                            '0x1f', '86141403,86141409',  # IMSI（支持多个IMSI号） unicode
+                            '0x1f', '86141403,86141409',  # IMSI（支持多个IMSI号） unicode  字符
                             )
         elif data == 'last_reg':
             result_value = ('0x1', '',  # 注册 必须在第一个子包 为必要发东西
@@ -346,35 +354,35 @@ class udpclass:
             result_value = (
                 '0x2', '',  # 心跳 在第一个子包
                 '0x11', '123456',  # 终端序列号(SN) 字符串
-                '0x24', '123456',  # 业务流量统计 unicode
-                '0x25', '123456',  # 网管流量统计 unicode
-                '0x30', 80,  # 终端CPU占用率 整数
-                '0x31', 80,  # 终端内存使用率 整数
-                '0x35', '12',  # 通信模块温度 unicode
-                '0x36', '123456',  # 信号强弱度 unicdoe
-                '0x37', '123456',  # 信噪比（信号质量） unicdoe
+                #'0x24', '123456',  # 业务流量统计 unicode
+                #'0x25', '123456',  # 网管流量统计 unicode
+                #'0x30', 80,  # 终端CPU占用率 整数
+                #'0x31', 80,  # 终端内存使用率 整数
+                #'0x35', '12',  # 通信模块温度 unicode
+                #'0x36', '123456',  # 信号强弱度 unicdoe
+                #'0x37', '123456',  # 信噪比（信号质量） unicdoe
             )
         elif data == 'select':
             result_value = (
                 '0x04', self.generate_random_str(8),  # 心跳 在第一个子包
                 '0x10', '',  # 终端厂商编号O  字符串 不得超过15字节 现在其实是定死了15字节来填
                 '0x11', '',  # 终端序列号(SN)0 字符串 不得超过15字节 现在其实是定死了15字节来填
-                '0x12', '',  # 终端版本号O  unicode
-                '0x13', '',  # 终端制式(LTE/2G等)O unicode的enum
-                '0x14', '',  # 终端IMEI号O 不得超过15字节 现在其实是定死了15字节来填
+                '0x12', '',  # 终端版本号O  unicode    字符
+                '0x13', '',  # 终端制式(LTE/2G等)O unicode的enum       字符
+                '0x14', '',  # 终端IMEI号O 不得超过15字节 现在其实是定死了15字节来填     字符
                 '0x16', '',  # 终端能力级别 unicode
-                '0x17', '',  # 终端型号 unicode
-                '0x20', '',  # 终端版本号 unicode
-                '0x24', '',  # 业务流量统计 unicode
-                '0x25', '',  # 网管流量统计 unicode
+                '0x17', '',  # 终端型号 unicode   上面已搞定 字符串
+                '0x20', '',  # 终端无线网络信息 unicode  字符串
+                '0x24', '',  # 业务流量统计 unicode  整数
+                '0x25', '',  # 网管流量统计 unicode  整数
                 '0x30', '',  # 终端CPU占用率 整数
                 '0x31', '',  # 终端内存使用率 整数
                 '0x32', '',  # 流量异常信息 unicode
-                '0x35', '',  # 终端温度 Unicode
-                '0x36', '',  # 信号强度弱 unicode
-                '0x37', '',  # 信噪比（信号质量） unicode
+                '0x35', '',  # 终端温度 Unicode  整数
+                '0x36', '',  # 信号强度弱 unicode 整数
+                '0x37', '',  # 信噪比（信号质量） unicode 整数
             )
-        elif data == 'act_report':
+        elif data == 'act_report': #未完成
             result_value = (
                 '0x3', '0',  # 周期性上报数据id
                 '0x11', '123456',  # 终端序列号(SN) 字符串
@@ -393,7 +401,7 @@ class udpclass:
                 '0x52', 10,  # 消息合并周期 整数
                 '0x53', 1,  # 重启设备 正整数 1就是要重启
                 '0x54', 'http://site.baidu.com/',  # 远程升级 字符串形式
-                '0x55', socket.inet_aton(self.get_ip()),  # 网管服务IP IP地址 4byte
+            #    '0x55', socket.inet_aton(self.get_ip()),  # 网管服务IP IP地址 4byte 暂时不管
                 '0x56', 10,  # 网管服务端口 正整数
 
             )
@@ -638,7 +646,7 @@ class udpclass:
                     new = {}
                     for r in y:
                         try:
-                            binascii.unhexlify(r)
+                            binascii.unhexlify(r) #16进制转2进制
                             print(repr(r))
                             if len(r) == 8:
                                 pick_new.append(int(r.encode('hex'),16))
@@ -646,7 +654,11 @@ class udpclass:
                             else:
                                 pick_new.append(binascii.unhexlify(r).decode('unicode-escape'))
                         except:
+
+
+
                             pick_new.append(r)
+
                             print('this')
                             print(repr(r))
 
@@ -662,7 +674,7 @@ class udpclass:
                         #print(t)
                         t += 1
                 print(pick_new)
-                res_dict = dict(zip(pick_new[::2], pick_new[1::2]))
+                res_dict = dict(zip(y[::2], y[1::2]))
                 print('get config msg')
                 for x, y in res_dict.items():
                     print("cmdid:" + str(x)+" value:" + str(y))
@@ -698,7 +710,7 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-#t1 = threading.Thread(target=u.send_msg,args=("config",'118.25.225.194',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("first_reg",'118.25.225.194',5577))
 #t1.start()
 t2 = threading.Thread(target=u.data_get(), args=())
 # print('11')
