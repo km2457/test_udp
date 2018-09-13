@@ -658,9 +658,7 @@ class udpclass:
                         elif x in ('0x55'):
                             res_dict[x] = y.decode('utf-8')
 
-                    for x, y in res_dict.items():
-
-                        print("cmdid:" + str(x) + " value:" + str(y))
+ 
 
 
                     print(res_dict)
