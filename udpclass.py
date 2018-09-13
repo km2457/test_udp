@@ -8,6 +8,7 @@ import string
 import unicodedata
 import threading
 import select
+import socket
 
 t = time.time()
 
@@ -61,6 +62,19 @@ class udpclass:
     def get_low(self, num):  # 获得低八位
         return num & 0xff
 
+    def get_ip(self):
+        import urllib2
+        import re
+
+        url = urllib2.urlopen("http://txt.go.sohu.com/ip/soip")
+        text = url.read()
+        ip = re.findall(r'\d+.\d+.\d+.\d+', text)
+
+        return ip[0]
+
+
+
+
     def generate_random_str(self, randomlength=16):
         """
         生成一个指定长度的随机字符串
@@ -102,6 +116,10 @@ class udpclass:
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x55':
+                        r.append(self.get_hight(4))
+                        r.append(self.get_low(4))
+                        r.append(args[1])
                     else:
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
@@ -194,10 +212,11 @@ class udpclass:
                         r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
                     elif args[0] == '0x54':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x55':
+                        r += '4B4s'
                     else:
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                 elif self.is_number(args[1]) == True:
-
                     if args[0] == '0x10':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x11':
@@ -227,7 +246,6 @@ class udpclass:
                     else:
                         r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
                     # r += '4B' + str(len(charToUnic2(args[1]).encode('unicode_escape'))) + 's'
-
             elif isinstance(args[1], int):
                 r += '4BL'
             elif isinstance(args[1], bytes):
@@ -255,6 +273,8 @@ class udpclass:
                         r += len(self.charToUnic2(args[1]).encode('utf-8'))
                     if args[0] == '0x54':
                         r += len(args[1].encode('unicode_escape'))
+                    if args[0] == '0x55':
+                        r += 4
                     else:
                         r += len(args[1].encode('unicode_escape'))
                 elif self.is_number(args[1]) == True:
@@ -373,7 +393,7 @@ class udpclass:
                 '0x52', 10,  # 消息合并周期 整数
                 '0x53', 1,  # 重启设备 正整数 1就是要重启
                 '0x54', 'http://site.baidu.com/',  # 远程升级 字符串形式
-                '0x55', '10',  # 网管服务IP IP地址 4byte
+                '0x55', socket.inet_aton(self.get_ip()),  # 网管服务IP IP地址 4byte
                 '0x56', 10,  # 网管服务端口 正整数
 
             )
@@ -434,6 +454,11 @@ class udpclass:
         print(struct.unpack('>BBLBB' + self.create_index(*now_data_values) + 'B', result))
         print('Unpacked Type :', type(result), ' Value:', result)
 
+
+
+        print('ip')
+        print(repr(socket.inet_aton(self.get_ip())))
+        print(self.is_number(socket.inet_aton(self.get_ip())))
         return result
 
     def send_msg_manage(self, data):
@@ -615,6 +640,7 @@ class udpclass:
                                 pick_new.append(binascii.unhexlify(r).decode('unicode-escape'))
                         except:
                             pick_new.append(r)
+                            print(r)
 
 
 
@@ -664,8 +690,8 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-# t1 = threading.Thread(target=u.send_msg,args=("config",'144.34.158.18',5577))
-# t1.start()
+#t1 = threading.Thread(target=u.send_msg,args=("config",'144.34.158.18',5577))
+#t1.start()
 t2 = threading.Thread(target=u.data_get(), args=())
 # print('11')
 t2.start()
