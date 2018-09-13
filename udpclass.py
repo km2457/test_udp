@@ -648,7 +648,7 @@ class udpclass:
                     #print('res')
                     print(res_dict)
 
-                    for x,y in res_dict:
+                    for x,y in res_dict.items():
                         if x in ('0x51','0x52','0x53'):
                             res_dict[x] = int(y,16)
 
