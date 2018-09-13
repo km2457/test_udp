@@ -651,7 +651,7 @@ class udpclass:
                     for x,y in res_dict.items():
                         if x in ('0x50','0x51','0x52','0x53','0x56'):
                             res_dict[x] = int(y,16)
-                        elif x in ('0x41','0x42','0x43'):
+                        elif x in ('0x41','0x42','0x43','0x54'):
                             res_dict[x] = binascii.unhexlify(y).decode('unicode-escape').decode('unicode-escape')
 
                             #res_dict[x] = y.decode('unicode-escape')
