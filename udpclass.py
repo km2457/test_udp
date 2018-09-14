@@ -612,7 +612,7 @@ class udpclass:
             elif i == '0x17':  # 终端型号
                 res.append("11")
             elif i == '0x20':  # 终端无线网络信息
-                res.append('11)
+                res.append('11')
             elif i == '0x24':  # 业务流量统计
                 res.append(11)
             elif i == '0x25':  # 网管流量统计
