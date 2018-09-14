@@ -265,6 +265,8 @@ class udpclass:
                         r += '4B' + str(15) + 's'
                     elif args[0] == '0x15':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x17':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x1f':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x24':
@@ -338,6 +340,8 @@ class udpclass:
                     elif args[0] == '0x14':
                         r += 15
                     elif args[0] == '0x15':
+                        r += len(args[1].encode('unicode_escape'))
+                    if args[0] == '0x17':
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x1f':
                         r += len(args[1].encode('unicode_escape'))
