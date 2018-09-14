@@ -248,6 +248,8 @@ class udpclass:
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x54':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    if args[0] == '0x17':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x55':
                         r += '4B4s'
                     else:
@@ -264,6 +266,8 @@ class udpclass:
                     elif args[0] == '0x14':
                         r += '4B' + str(15) + 's'
                     elif args[0] == '0x15':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    if args[0] == '0x17':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x1f':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
@@ -612,7 +616,7 @@ class udpclass:
             elif i == '0x17':  # 终端型号
                 res.append("11")
             elif i == '0x20':  # 终端无线网络信息
-                res.append(11)
+                res.append('11')
             elif i == '0x24':  # 业务流量统计
                 res.append(11)
             elif i == '0x25':  # 网管流量统计
