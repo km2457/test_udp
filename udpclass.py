@@ -246,6 +246,8 @@ class udpclass:
                         r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
                     elif args[0] == '0x13':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x17':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x54':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x55':
@@ -264,6 +266,8 @@ class udpclass:
                     elif args[0] == '0x14':
                         r += '4B' + str(15) + 's'
                     elif args[0] == '0x15':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x17':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x1f':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
@@ -319,9 +323,11 @@ class udpclass:
                         r += len(self.charToUnic2(args[1]).encode('utf-8'))
                     elif args[0] == '0x13':
                         r += len(args[1].encode('unicode_escape'))
-                    if args[0] == '0x54':
+                    elif args[0] == '0x17':
                         r += len(args[1].encode('unicode_escape'))
-                    if args[0] == '0x55':
+                    elif args[0] == '0x54':
+                        r += len(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x55':
                         r += 4
                     else:
                         r += len(args[1].encode('unicode_escape'))
@@ -338,6 +344,8 @@ class udpclass:
                     elif args[0] == '0x14':
                         r += 15
                     elif args[0] == '0x15':
+                        r += len(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x17':
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x1f':
                         r += len(args[1].encode('unicode_escape'))
