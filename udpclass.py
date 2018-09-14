@@ -92,12 +92,8 @@ class udpclass:
         return (num & 0xff00) >> 8
 
     def create_values(self, *args):
-        r = []      #?    ?      ?     15   15      15     20      6     15     32     8      2
-        str_data = ('0x1','0x2','0x3','0x4','0x10','0x11','0x12','0x13','0x14','0x1f','0x17','0x20')
-        #           4        4     2      2       2     2      2
-        int_data = ('0x24','0x25','0x30','0x31','0x35','0x36','0x37')
+        r = []
 
-        unicode_data = ('0x16','0x32')
         while args:
             r.append(self.get_hight(int(args[0], 16)))
             r.append(self.get_low(int(args[0], 16)))
@@ -134,10 +130,21 @@ class udpclass:
                     r.append(self.get_hight(4))
                     r.append(self.get_low(4))
                     r.append(args[1])
+                elif args[0] in ('0x72'):
+                    r.append(self.get_hight(8))
+                    r.append(self.get_low(8))
+                    r.append(args[1])
                 else:
                     r.append(self.get_hight(2))
                     r.append(self.get_low(2))
                     r.append(args[1])
+
+            elif args[0] in float_data:
+                r.append(self.get_hight(8))
+                r.append(self.get_low(8))
+                r.append(args[1])
+
+
             elif args[0] in unicode_data:
                 r.append(self.get_hight(len(self.charToUnic2(args[1]).encode('utf-8'))))
                 r.append(self.get_low(len(self.charToUnic2(args[1]).encode('utf-8'))))
@@ -150,9 +157,8 @@ class udpclass:
 
     def create_index(self, *args):
         r = ''
-        str_data = ('0x1','0x2','0x3','0x4','0x10','0x11','0x12','0x13','0x14','0x1f','0x17','0x20')
-        int_data = ('0x24','0x25','0x30','0x31','0x35','0x36','0x37')
-        unicode_data = ('0x16','0x32')
+
+
 
         while args:
 
@@ -175,8 +181,14 @@ class udpclass:
 
                 if args[0] in ('0x24', '0x25'):  # 4
                     r += '4BL'
+                elif args[0] in ('0x72'):
+                    r += '4BQ'
                 else:
                     r += '4BH'
+
+            elif args[0] in float_data:
+                    r += '4Bd'
+
 
             elif args[0] in unicode_data:
                 r += '4B' + str(len(self.charToUnic2(args[1]).encode('utf-8'))) + 's'
@@ -190,9 +202,7 @@ class udpclass:
 
     def create_baochang(self, *args):
         r = 1
-        str_data = ('0x1','0x2','0x3','0x4','0x10','0x11','0x12','0x13','0x14','0x1f','0x17','0x20')
-        int_data = ('0x24','0x25','0x30','0x31','0x35','0x36','0x37')
-        unicode_data = ('0x16','0x32')
+
 
         while args:
             r += 2
@@ -215,8 +225,13 @@ class udpclass:
             elif args[0] in int_data:
                 if args[0] in ('0x24', '0x25'):  # 4
                     r += 4
+                elif args[0] in ('0x72'):
+                    r += 8
                 else:
                     r += 2
+
+            elif args[0] in float_data:
+                    r += 8
 
             elif args[0] in unicode_data:
                 r += len(self.charToUnic2(args[1]).encode('utf-8'))
@@ -245,6 +260,9 @@ class udpclass:
                             '0x13', '01',  # 终端制式(LTE/2G等) #unicode  字符
                             '0x14', '291868248829057',  # 终端IMEI号 字符串
                             '0x1f', '86141403,86141409',  # IMSI（支持多个IMSI号） unicode  字符
+                            #'0x70', 29,  # 经度 双精度
+                            #'0x71', 86,  # 纬度 双精度
+                            #'0x72', 86,  # 海拔 整数
                             )
         elif data == 'last_reg':
             result_value = ('0x1', '',  # 注册 必须在第一个子包 为必要发东西
@@ -254,13 +272,6 @@ class udpclass:
             result_value = (
                 '0x2', '',  # 心跳 在第一个子包
                 '0x11', '123456',  # 终端序列号(SN) 字符串
-                #'0x24', '123456',  # 业务流量统计 unicode
-                #'0x25', '123456',  # 网管流量统计 unicode
-                #'0x30', 80,  # 终端CPU占用率 整数
-                #'0x31', 80,  # 终端内存使用率 整数
-                #'0x35', '12',  # 通信模块温度 unicode
-                #'0x36', '123456',  # 信号强弱度 unicdoe
-                #'0x37', '123456',  # 信噪比（信号质量） unicdoe
             )
         elif data == 'select':
             result_value = (
@@ -371,9 +382,9 @@ class udpclass:
 
 
 
-        print('ip')
-        print(repr(socket.inet_aton(self.get_ip())))
-        print(self.is_number(socket.inet_aton(self.get_ip())))
+        #print('ip')
+        #print(repr(socket.inet_aton(self.get_ip())))
+        #print(self.is_number(socket.inet_aton(self.get_ip())))
         return result
 
     def send_msg_manage(self, data):
@@ -597,6 +608,12 @@ class udpclass:
 
 
 u = udpclass()
+
+str_data = ('0x1', '0x2', '0x3', '0x4', '0x10', '0x11', '0x12', '0x13', '0x14', '0x1f', '0x17', '0x20')
+int_data = ('0x24', '0x25', '0x30', '0x31', '0x35', '0x36', '0x37','0x72')
+unicode_data = ('0x16', '0x32')
+float_data = ('0x70','0x71')
+
 # listen()
 # u.send_msg(u.build_msg('beat'),'127.0.0.1',5577) #自己
 # u.data_get()
@@ -612,7 +629,7 @@ u = udpclass()
 
 timeout = 3 * 1  #
 
-#t1 = threading.Thread(target=u.send_msg,args=("act_report",'119.23.138.79',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("first_reg",'119.23.138.79',5577))
 #t1.start()
 t2 = threading.Thread(target=u.data_get(), args=())
 # print('11')
