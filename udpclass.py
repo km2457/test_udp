@@ -151,8 +151,8 @@ class udpclass:
                         r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
                     elif args[0] == '0x14':
-                        r.append(self.get_hight(15))
-                        r.append(self.get_low(15))
+                        r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
+                        r.append(self.get_low(len(args[1].encode('unicode_escape'))))
                         r.append(args[1].encode('unicode_escape'))
                     elif args[0] == '0x15':
                         r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
@@ -266,7 +266,7 @@ class udpclass:
                     elif args[0] == '0x13':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x14':
-                        r += '4B' + str(15) + 's'
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x15':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x17':
@@ -348,7 +348,7 @@ class udpclass:
                     elif args[0] == '0x13':
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x14':
-                        r += 15
+                        r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x15':
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x17':
