@@ -753,7 +753,7 @@ class udpclass:
             elif i == '0x31':  # 终端内存使用率
                 res.append(20)
             elif i == '0x32':  # 流量异常信息
-                res.append(2)
+                res.append('2')
             elif i == '0x35':  # 终端温度
                 res.append(1)
             elif i == '0x36':  # 信号强度弱
