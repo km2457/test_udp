@@ -250,6 +250,8 @@ class udpclass:
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x54':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x20':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x55':
                         r += '4B4s'
                     else:
@@ -268,6 +270,8 @@ class udpclass:
                     elif args[0] == '0x15':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x17':
+                        r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
+                    elif args[0] == '0x20':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
                     elif args[0] == '0x1f':
                         r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
@@ -325,6 +329,8 @@ class udpclass:
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x17':
                         r += len(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x20':
+                        r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x54':
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x55':
@@ -346,6 +352,8 @@ class udpclass:
                     elif args[0] == '0x15':
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x17':
+                        r += len(args[1].encode('unicode_escape'))
+                    elif args[0] == '0x20':
                         r += len(args[1].encode('unicode_escape'))
                     elif args[0] == '0x1f':
                         r += len(args[1].encode('unicode_escape'))
