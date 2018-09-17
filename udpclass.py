@@ -349,7 +349,10 @@ class udpclass:
         pack_length = self.create_baochang(*now_data_values)
         pack_length_hight = self.get_hight(pack_length)
         pack_length_low = self.get_low(pack_length)
-        timestamp_mesc_last4byte = long(hex(timestamp_mesc)[-9:-1], 16)
+        if hex(timestamp_mesc)[-1] =='L':
+            timestamp_mesc_last4byte = long(hex(timestamp_mesc)[-9:-1], 16)
+        else:
+            timestamp_mesc_last4byte = long(hex(timestamp_mesc)[-8:], 16)
         print('warring')
         print(timestamp_mesc)
         print(timestamp_mesc_last4byte)
