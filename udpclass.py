@@ -260,27 +260,27 @@ class udpclass:
         elif data == 'beat':
             result_value = (
                 '0x2', '',  # 心跳 在第一个子包
-                '0x11', '123456',  # 终端序列号(SN) 字符串
+                #'0x11', '123456',  # 终端序列号(SN) 字符串
             )
         elif data == 'select':
             result_value = (
                 '0x4', self.generate_random_str(8),  # 心跳 在第一个子包
-                '0x10', '1',  # 终端厂商编号O  字符串 不得超过15字节 现在其实是定死了15字节来填
-                '0x11', '2',  # 终端序列号(SN)0 字符串 不得超过15字节 现在其实是定死了15字节来填
-                '0x12', '3',  # 终端版本号O  unicode    字符
-                '0x13', '4',  # 终端制式(LTE/2G等)O unicode的enum       字符
-                '0x14', '5',  # 终端IMEI号O 不得超过15字节 现在其实是定死了15字节来填     字符
-                '0x16', '6',  # 终端能力级别 unicode
-                '0x17', '7',  # 终端型号 unicode   上面已搞定 字符串
-                '0x20', '8',  # 终端无线网络信息 unicode  字符串
-                '0x24', 9,  # 业务流量统计 unicode  整数
-                '0x25', 10,  # 网管流量统计 unicode  整数
-                '0x30', 11,  # 终端CPU占用率 整数
-                '0x31', 12,  # 终端内存使用率 整数
-                '0x32', '13',  # 流量异常信息 unicode
-                '0x35', 14,  # 终端温度 Unicode  整数
-                '0x36', 15,  # 信号强度弱 unicode 整数
-                '0x37', 16,  # 信噪比（信号质量） unicode 整数
+                #'0x10', '1',  # 终端厂商编号O  字符串 不得超过15字节 现在其实是定死了15字节来填
+                #'0x11', '2',  # 终端序列号(SN)0 字符串 不得超过15字节 现在其实是定死了15字节来填
+                #'0x12', '3',  # 终端版本号O  unicode    字符
+                #'0x13', '4',  # 终端制式(LTE/2G等)O unicode的enum       字符
+                #'0x14', '5',  # 终端IMEI号O 不得超过15字节 现在其实是定死了15字节来填     字符
+                #'0x16', '6',  # 终端能力级别 unicode
+                #'0x17', '7',  # 终端型号 unicode   上面已搞定 字符串
+                #'0x20', '8',  # 终端无线网络信息 unicode  字符串
+                #'0x24', 9,  # 业务流量统计 unicode  整数
+                #'0x25', 10,  # 网管流量统计 unicode  整数
+                #'0x30', 11,  # 终端CPU占用率 整数
+                #'0x31', 12,  # 终端内存使用率 整数
+                #'0x32', '13',  # 流量异常信息 unicode
+                #'0x35', 14,  # 终端温度 Unicode  整数
+                #'0x36', 15,  # 信号强度弱 unicode 整数
+                #'0x37', 16,  # 信噪比（信号质量） unicode 整数
             )
         elif data == 'act_report':  # 未完成
             result_value = (
@@ -350,6 +350,9 @@ class udpclass:
         pack_length_hight = self.get_hight(pack_length)
         pack_length_low = self.get_low(pack_length)
         timestamp_mesc_last4byte = long(hex(timestamp_mesc)[-9:-1], 16)
+        print('warring')
+        print(timestamp_mesc_last4byte)
+        print('warring')
         new_values = [int(header, 16), 1, timestamp_mesc_last4byte, pack_length_hight,
                       pack_length_low] + self.create_values(
             *now_data_values)
@@ -650,7 +653,7 @@ timer2.start()
 
 
 
-#t1 = threading.Thread(target=u.send_msg,args=("first_reg",'119.23.138.79',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5577))
 #t1.start()
 
 '''
