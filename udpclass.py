@@ -72,9 +72,6 @@ class udpclass:
 
         return ip[0]
 
-
-
-
     def generate_random_str(self, randomlength=16):
         """
         生成一个指定长度的随机字符串
@@ -98,27 +95,26 @@ class udpclass:
             r.append(self.get_hight(int(args[0], 16)))
             r.append(self.get_low(int(args[0], 16)))
 
-
             if args[0] in str_data:
-                if args[0] in ('0x4','0x10','0x11','0x14'): #15
-                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')),15)))
-                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')),15)))
+                if args[0] in ('0x4', '0x10', '0x11', '0x14'):  # 15
+                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')), 15)))
+                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')), 15)))
                     r.append(args[1].encode('unicode_escape'))
-                elif args[0] in ('0x20'): #2
-                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')),2)))
-                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')),2)))
+                elif args[0] in ('0x20'):  # 2
+                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')), 2)))
+                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')), 2)))
                     r.append(args[1].encode('unicode_escape'))
-                elif args[0] in ('0x12'): #20
-                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')),20)))
-                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')),20)))
+                elif args[0] in ('0x12'):  # 20
+                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')), 20)))
+                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')), 20)))
                     r.append(args[1].encode('unicode_escape'))
-                elif args[0] in ('0x17'): #8
-                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')),8)))
-                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')),8)))
+                elif args[0] in ('0x17'):  # 8
+                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')), 8)))
+                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')), 8)))
                     r.append(args[1].encode('unicode_escape'))
-                elif args[0] in ('0x1f'): #32
-                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')),32)))
-                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')),32)))
+                elif args[0] in ('0x1f'):  # 32
+                    r.append(self.get_hight(min(len(args[1].encode('unicode_escape')), 32)))
+                    r.append(self.get_low(min(len(args[1].encode('unicode_escape')), 32)))
                     r.append(args[1].encode('unicode_escape'))
                 else:
                     r.append(self.get_hight(len(args[1].encode('unicode_escape'))))
@@ -152,28 +148,25 @@ class udpclass:
 
             args = args[2:]
 
-
         return r
 
     def create_index(self, *args):
         r = ''
 
-
-
         while args:
 
             if args[0] in str_data:
 
-                if args[0] in ('0x4','0x10','0x11','0x14'): #15
-                    r += '4B' + str(min(len(args[1].encode('unicode_escape')),15)) + 's'
-                elif args[0] in ('0x20'): #2
-                    r += '4B' + str(min(len(args[1].encode('unicode_escape')),2)) + 's'
-                elif args[0] in ('0x12'): #20
-                    r += '4B' + str(min(len(args[1].encode('unicode_escape')),20)) + 's'
-                elif args[0] in ('0x17'): #8
-                    r += '4B' + str(min(len(args[1].encode('unicode_escape')),8)) + 's'
-                elif args[0] in ('0x1f'): #32
-                    r += '4B' + str(min(len(args[1].encode('unicode_escape')),32)) + 's'
+                if args[0] in ('0x4', '0x10', '0x11', '0x14'):  # 15
+                    r += '4B' + str(min(len(args[1].encode('unicode_escape')), 15)) + 's'
+                elif args[0] in ('0x20'):  # 2
+                    r += '4B' + str(min(len(args[1].encode('unicode_escape')), 2)) + 's'
+                elif args[0] in ('0x12'):  # 20
+                    r += '4B' + str(min(len(args[1].encode('unicode_escape')), 20)) + 's'
+                elif args[0] in ('0x17'):  # 8
+                    r += '4B' + str(min(len(args[1].encode('unicode_escape')), 8)) + 's'
+                elif args[0] in ('0x1f'):  # 32
+                    r += '4B' + str(min(len(args[1].encode('unicode_escape')), 32)) + 's'
                 else:
                     r += '4B' + str(len(args[1].encode('unicode_escape'))) + 's'
 
@@ -187,7 +180,7 @@ class udpclass:
                     r += '4BH'
 
             elif args[0] in float_data:
-                    r += '4Bd'
+                r += '4Bd'
 
 
             elif args[0] in unicode_data:
@@ -195,31 +188,27 @@ class udpclass:
 
             args = args[2:]
 
-
-
-
         return r
 
     def create_baochang(self, *args):
         r = 1
-
 
         while args:
             r += 2
             r += 2
 
             if args[0] in str_data:
-                #r += len(args[1].encode('unicode_escape'))
-                if args[0] in ('0x4','0x10','0x11','0x14'): #15
-                    r += min(len(args[1].encode('unicode_escape')),15)
-                elif args[0] in ('0x20'): #2
-                    r += min(len(args[1].encode('unicode_escape')),2)
-                elif args[0] in ('0x12'): #20
-                    r += min(len(args[1].encode('unicode_escape')),20)
-                elif args[0] in ('0x17'): #8
-                    r += min(len(args[1].encode('unicode_escape')),8)
-                elif args[0] in ('0x1f'): #32
-                    r += min(len(args[1].encode('unicode_escape')),32)
+                # r += len(args[1].encode('unicode_escape'))
+                if args[0] in ('0x4', '0x10', '0x11', '0x14'):  # 15
+                    r += min(len(args[1].encode('unicode_escape')), 15)
+                elif args[0] in ('0x20'):  # 2
+                    r += min(len(args[1].encode('unicode_escape')), 2)
+                elif args[0] in ('0x12'):  # 20
+                    r += min(len(args[1].encode('unicode_escape')), 20)
+                elif args[0] in ('0x17'):  # 8
+                    r += min(len(args[1].encode('unicode_escape')), 8)
+                elif args[0] in ('0x1f'):  # 32
+                    r += min(len(args[1].encode('unicode_escape')), 32)
                 else:
                     r += len(args[1].encode('unicode_escape'))
             elif args[0] in int_data:
@@ -231,7 +220,7 @@ class udpclass:
                     r += 2
 
             elif args[0] in float_data:
-                    r += 8
+                r += 8
 
             elif args[0] in unicode_data:
                 r += len(self.charToUnic2(args[1]).encode('utf-8'))
@@ -260,9 +249,9 @@ class udpclass:
                             '0x13', '01',  # 终端制式(LTE/2G等) #unicode  字符
                             '0x14', '291868248829057',  # 终端IMEI号 字符串
                             '0x1f', '86141403,86141409',  # IMSI（支持多个IMSI号） unicode  字符
-                            #'0x70', 29,  # 经度 双精度
-                            #'0x71', 86,  # 纬度 双精度
-                            #'0x72', 86,  # 海拔 整数
+                            # '0x70', 29,  # 经度 双精度
+                            # '0x71', 86,  # 纬度 双精度
+                            # '0x72', 86,  # 海拔 整数
                             )
         elif data == 'last_reg':
             result_value = ('0x1', '',  # 注册 必须在第一个子包 为必要发东西
@@ -293,7 +282,7 @@ class udpclass:
                 '0x36', 15,  # 信号强度弱 unicode 整数
                 '0x37', 16,  # 信噪比（信号质量） unicode 整数
             )
-        elif data == 'act_report': #未完成
+        elif data == 'act_report':  # 未完成
             result_value = (
                 '0x3', '',  # 周期性上报数据id
                 '0x11', '123456',  # 终端序列号(SN) 字符串
@@ -305,7 +294,6 @@ class udpclass:
                 '0x35', 5,  # 通讯模块温度 整数
                 '0x36', 6,  # 信号强弱度 整数
                 '0x37', 7,  # 信噪比 整数
-
 
             )
         elif data == 'config':
@@ -319,7 +307,7 @@ class udpclass:
                 '0x52', 10,  # 消息合并周期 整数
                 '0x53', 1,  # 重启设备 正整数 1就是要重启
                 '0x54', 'http://site.baidu.com/',  # 远程升级 字符串形式
-            #    '0x55', socket.inet_aton(self.get_ip()),  # 网管服务IP IP地址 4byte 暂时不管
+                #    '0x55', socket.inet_aton(self.get_ip()),  # 网管服务IP IP地址 4byte 暂时不管
                 '0x56', 10,  # 网管服务端口 正整数
 
             )
@@ -380,11 +368,9 @@ class udpclass:
         print(struct.unpack('>BBLBB' + self.create_index(*now_data_values) + 'B', result))
         print('Unpacked Type :', type(result), ' Value:', result)
 
-
-
-        #print('ip')
-        #print(repr(socket.inet_aton(self.get_ip())))
-        #print(self.is_number(socket.inet_aton(self.get_ip())))
+        # print('ip')
+        # print(repr(socket.inet_aton(self.get_ip())))
+        # print(self.is_number(socket.inet_aton(self.get_ip())))
         return result
 
     def send_msg_manage(self, data):
@@ -407,7 +393,7 @@ class udpclass:
         return 1
 
     def send_msg(self, data, ip, port, answer=1):
-        send_data = u.build_msg(data, answer)
+        send_data = self.build_msg(data, answer)
         import socket
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -444,8 +430,6 @@ class udpclass:
                     print("relink:" + str(c))
                 c += 1
             # print(1)
-
-
 
         # exit()
 
@@ -498,7 +482,7 @@ class udpclass:
 
         return tuple(res)
 
-    def data_pick_cmdid(self, data,type=1):
+    def data_pick_cmdid(self, data, type=1):
         res = []
         # print(data)
         while data:
@@ -506,7 +490,7 @@ class udpclass:
             id = data[0:4]
             # print(id)
             pack_length = data[4:8]
-            pack = data[8:8 + int(pack_length, 16)*2]
+            pack = data[8:8 + int(pack_length, 16) * 2]
 
             res.append(hex(int(id, 16)))
             if type == 1:
@@ -541,35 +525,35 @@ class udpclass:
                 other_data = data_side[8 + select_msg_pack_legth * 2:]
                 select_header = data_side[8:select_msg_pack_legth * 2]
 
-                #print(repr(data))
+                # print(repr(data))
                 data_all = binascii.b2a_hex(data)[16:-2]
 
-                #print(binascii.unhexlify(data_side))
-                #print(data_all)
+                # print(binascii.unhexlify(data_side))
+                # print(data_all)
 
                 data_cmdid_array = self.data_pick_cmdid(data_all)
 
                 if '0x4' in data_cmdid_array:
                     print('for 0x4')
-                    print(self.create_answer(select_header, self.data_pick_cmdid(other_data,type=2)))
-                    self.send_msg('return_select', '119.23.138.79', 5577,answer=self.create_answer(select_header, self.data_pick_cmdid(other_data,type=2)))
+                    print(self.create_answer(select_header, self.data_pick_cmdid(other_data, type=2)))
+                    self.send_msg('return_select', '119.23.138.79', 5577,
+                                  answer=self.create_answer(select_header, self.data_pick_cmdid(other_data, type=2)))
                 elif '0x5' in data_cmdid_array:
                     print('config')
-                    #print(binascii.hexlify(data))
-                    #print(other_data)
-                    #print(data_side)
+                    # print(binascii.hexlify(data))
+                    # print(other_data)
+                    # print(data_side)
                     y = self.data_pick_cmdid(data_side)
 
-
                     print(y)
-                    #print(y)
-                    #print()
-                    #print(binascii.unhexlify(y))
+                    # print(y)
+                    # print()
+                    # print(binascii.unhexlify(y))
                     t = 0
                     pick_new = []
                     new = {}
                     res_dict = dict(zip(y[::2], y[1::2]))
-                    #print('res')
+                    # print('res')
                     print(res_dict)
 
                     for x, y in res_dict.items():
@@ -586,33 +570,31 @@ class udpclass:
                         elif x in ('0x55'):
                             res_dict[x] = y.decode('utf-8')
 
-
-
-
                     print(res_dict)
 
-                    #print("value:" + str(y))
+                    # print("value:" + str(y))
 
-                #print(pick_new)
-                #print(res_dict)
-                #print(repr(data))
-                #print(addr[0])
-                #print(addr[1])
-                #print(data_cmdid_array)
+                # print(pick_new)
+                # print(res_dict)
+                # print(repr(data))
+                # print(addr[0])
+                # print(addr[1])
+                # print(data_cmdid_array)
 
 
 
         except KeyboardInterrupt:
             print()
-    # , '127.0.0.1', 10000
 
+
+    # , '127.0.0.1', 10000
 
 u = udpclass()
 
 str_data = ('0x1', '0x2', '0x3', '0x4', '0x10', '0x11', '0x12', '0x13', '0x14', '0x1f', '0x17', '0x20')
-int_data = ('0x24', '0x25', '0x30', '0x31', '0x35', '0x36', '0x37','0x72')
+int_data = ('0x24', '0x25', '0x30', '0x31', '0x35', '0x36', '0x37', '0x72')
 unicode_data = ('0x16', '0x32')
-float_data = ('0x70','0x71')
+float_data = ('0x70', '0x71')
 
 # listen()
 # u.send_msg(u.build_msg('beat'),'127.0.0.1',5577) #自己
@@ -629,8 +611,54 @@ float_data = ('0x70','0x71')
 
 timeout = 3 * 1  #
 
+
+
+'''
+def fun_timer(time):
+    print('Hello Timer!')
+    global timer
+
+    timer = threading.Timer(time, fun_timer)
+    u.send_msg("first_reg", '119.23.138.79', 5577)
+    timer.start()
+
+timer = threading.Timer(3, fun_timer(1*60*10))) #第一次
+timer.start()
+
+
+def fun_timer2(time):
+    print('Hello Timer!')
+
+    global timer
+    timer = threading.Timer(time, fun_timer2)
+    u.send_msg("beat", '119.23.138.79', 5577)
+    timer.start()
+
+timer2 = threading.Timer(5, fun_timer2(1*60*10))
+timer2.start()
+
+
+'''
+
+
+
+
+#fun_timer()
+
+#timer = threading.Timer(1, u.fun_timer)
+#timer.start()
+
+
+
 #t1 = threading.Thread(target=u.send_msg,args=("first_reg",'119.23.138.79',5577))
 #t1.start()
+
+'''
+while True:
+    u.send_msg("first_reg", '119.23.138.79', 5577)
+    time.sleep(1)
+'''
+
 t2 = threading.Thread(target=u.data_get(), args=())
 # print('11')
 t2.start()
@@ -653,5 +681,3 @@ while True:
         #print(t1.isAlive())
         # t1.join(''
 '''
-
-
