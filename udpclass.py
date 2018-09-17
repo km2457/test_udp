@@ -351,6 +351,7 @@ class udpclass:
         pack_length_low = self.get_low(pack_length)
         timestamp_mesc_last4byte = long(hex(timestamp_mesc)[-9:-1], 16)
         print('warring')
+        print(timestamp_mesc)
         print(timestamp_mesc_last4byte)
         print('warring')
         new_values = [int(header, 16), 1, timestamp_mesc_last4byte, pack_length_hight,
