@@ -407,7 +407,11 @@ class udpclass:
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         # print('sentojieguo')
-        s.sendto(send_data, (ip, port))
+        #send_data
+        print('zhuyi')
+        print(ip)
+        print(port)
+        s.sendto('ef015bab416a002b00050000005400222f7265736f75726365732f6d707675655f313533373935303337323538392e7a697063', (ip, port))
         # print('fasongchenggong')
         s.setblocking(0)
         ready = select.select([s], [], [], timeout)
@@ -424,7 +428,7 @@ class udpclass:
             relink = 3
             c = 1
             while c <= relink:
-                s.sendto(send_data, (ip, port))
+                s.sendto('ef015bab416a002b00050000005400222f7265736f75726365732f6d707675655f313533373935303337323538392e7a697063', (ip, port))
                 s.setblocking(0)
                 ready = select.select([s], [], [], timeout)
                 if ready[0]:
@@ -514,7 +518,7 @@ class udpclass:
 
         return res
 
-    def send_msg2(self, ip, port):
+    def send_msg2(data, ip, port):
         import socket
 
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -688,7 +692,7 @@ timer2.start()
 #t1.start()
 
 
-#t1 = threading.Thread(target=u.send_msg2,args=('144.34.158.18',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("act_report",'144.34.158.18',5577))
 #t1.start()
 
 
