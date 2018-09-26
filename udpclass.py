@@ -122,7 +122,7 @@ class udpclass:
                     r.append(args[1].encode('unicode_escape'))
 
             elif args[0] in int_data:
-                if args[0] in ('0x24', '0x25'):  # 4
+                if args[0] in ('0x24', '0x25','0x36'):  # 4
                     r.append(self.get_hight(4))
                     r.append(self.get_low(4))
                     r.append(args[1])
@@ -172,10 +172,10 @@ class udpclass:
 
             elif args[0] in int_data:
 
-                if args[0] in ('0x24', '0x25'):  # 4
-                    r += '4BL'
+                if args[0] in ('0x24', '0x25','0x36'):  # 4
+                    r += '4Bl'
                 elif args[0] in ('0x72'):
-                    r += '4BQ'
+                    r += '4Bq'
                 else:
                     r += '4BH'
 
@@ -212,7 +212,7 @@ class udpclass:
                 else:
                     r += len(args[1].encode('unicode_escape'))
             elif args[0] in int_data:
-                if args[0] in ('0x24', '0x25'):  # 4
+                if args[0] in ('0x24', '0x25','0x36'):  # 4
                     r += 4
                 elif args[0] in ('0x72'):
                     r += 8
@@ -254,13 +254,13 @@ class udpclass:
                             # '0x72', 86,  # 海拔 整数
                             )
         elif data == 'last_reg':
-            result_value = ('0x1', '',  # 注册 必须在第一个子包 为必要发东西
+            result_value = ('0x11', '',  # 注册 必须在第一个子包 为必要发东西
                             '0x11', '586356170700002',  # 终端序列号(SN) 当字符串
                             )
         elif data == 'beat':
             result_value = (
                 '0x2', '',  # 心跳 在第一个子包
-                #'0x11', '123456',  # 终端序列号(SN) 字符串
+                '0x11', '123456',  # 终端序列号(SN) 字符串
             )
         elif data == 'select':
             result_value = (
@@ -274,7 +274,7 @@ class udpclass:
                 #'0x17', '7',  # 终端型号 unicode   上面已搞定 字符串
                 #'0x20', '8',  # 终端无线网络信息 unicode  字符串
                 #'0x24', 9,  # 业务流量统计 unicode  整数
-                #'0x25', 10,  # 网管流量统计 unicode  整数
+                #'0x25', 10,  # 网管流量统计 unicode  整数a
                 #'0x30', 11,  # 终端CPU占用率 整数
                 #'0x31', 12,  # 终端内存使用率 整数
                 #'0x32', '13',  # 流量异常信息 unicode
@@ -282,7 +282,7 @@ class udpclass:
                 #'0x36', 15,  # 信号强度弱 unicode 整数
                 #'0x37', 16,  # 信噪比（信号质量） unicode 整数
             )
-        elif data == 'act_report':  # 未完成
+        elif data == 'act_report':  #
             result_value = (
                 '0x3', '',  # 周期性上报数据id
                 '0x11', '123456',  # 终端序列号(SN) 字符串
@@ -292,8 +292,8 @@ class udpclass:
                 '0x30', 3,  # 终端CPU占用率 整数
                 '0x31', 4,  # 终端内存使用率 整数
                 '0x35', 5,  # 通讯模块温度 整数
-                '0x36', 6,  # 信号强弱度 整数
-                '0x37', 7,  # 信噪比 整数
+                '0x36', -123,  # 信号强弱度 整数  改字符串
+                '0x37', 10,  # 信噪比 整数
 
             )
         elif data == 'config':
@@ -364,6 +364,8 @@ class udpclass:
         a = struct.Struct('>BBLBB' + self.create_index(*now_data_values))
         result_nochecksum = a.pack(*new_values)
         checksum = self.ichecksum3(self.ichecksum_change((binascii.hexlify(result_nochecksum[6:]))))
+        print('warring')
+        print(binascii.hexlify(result_nochecksum[6:]))
         new_values.append(checksum)
         b = struct.Struct('>BBLBB' + self.create_index(*now_data_values) + 'B')
         result = b.pack(*new_values)
@@ -483,7 +485,7 @@ class udpclass:
             elif i == '0x35':  # 终端温度
                 res.append(1)
             elif i == '0x36':  # 信号强度弱
-                res.append(1)
+                res.append(-1231)
             elif i == '0x37':  # 信噪比（信号质量）
                 res.append(1)
 
@@ -511,6 +513,31 @@ class udpclass:
             data = data[8 + int(pack_length, 16) * 2:]
 
         return res
+
+    def send_msg2(self, ip, port):
+        import socket
+
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.sendto('ef015bab416a002b00050000005400222f7265736f75726365732f6d707675655f313533373935303337323538392e7a697063',(ip, port))
+        while True:
+            # 接收来自客户端的数据,使用recvfrom
+            data, addr = s.recvfrom(1024)
+            print('Received from %s:%s.' % addr)
+            print('heiheihei')
+            '''
+            if (binascii.b2a_hex(data)[16:])[:4] == '0001':
+                print(u'服务器返回0x01')
+            else:
+                print(binascii.b2a_hex(data))
+            '''
+            print(binascii.b2a_hex(data))
+            # print((binascii.b2a_hex(data)[16:])[:4])
+            exit()
+
+        return '1'
+
+
+
 
     def data_get(self):
         import socket, binascii
@@ -598,8 +625,8 @@ class udpclass:
 
 u = udpclass()
 
-str_data = ('0x1', '0x2', '0x3', '0x4', '0x10', '0x11', '0x12', '0x13', '0x14', '0x1f', '0x17', '0x20')
-int_data = ('0x24', '0x25', '0x30', '0x31', '0x35', '0x36', '0x37', '0x72')
+str_data = ('0x1', '0x2', '0x3', '0x4','0x5', '0x10', '0x11', '0x12', '0x13', '0x14', '0x1f', '0x17', '0x20')
+int_data = ('0x24', '0x25', '0x30', '0x31', '0x35', '0x37', '0x72', '0x36')
 unicode_data = ('0x16', '0x32')
 float_data = ('0x70', '0x71')
 
@@ -657,8 +684,13 @@ timer2.start()
 
 
 
-#t1 = threading.Thread(target=u.send_msg,args=("select",'144.34.158.18',5577))
+#t1 = threading.Thread(target=u.send_msg,args=("act_report",'144.34.158.18',5577))
 #t1.start()
+
+
+#t1 = threading.Thread(target=u.send_msg2,args=('144.34.158.18',5577))
+#t1.start()
+
 
 '''
 while True:
